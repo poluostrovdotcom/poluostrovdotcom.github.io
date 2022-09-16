@@ -3,12 +3,12 @@ var curPage = "";
 function createMenu(where)
 {
     menu = Array( 
-        { url: 'story.html', title: 'Our&nbsp;Story',class:''},
-        { url: 'careers.html', title: 'Careers',class:''},
-        { url: 'investors.html', title: 'Investors',class:''},
-        { url: 'contact.html', title: 'Contact',class:''},
-        { url: 'presskit.html', title: 'Press&nbsp;Kit',class:''},
-        { url: 'purchase.html', title: 'Purchase<br><small>Flying&nbsp;Car</small>',class:Array('menu-button')}, 
+        { url: 'index.html', title: 'История Клуба',class:''},
+        { url: 'index.html', title: 'Персоналии',class:''},
+        // { url: 'investors.html', title: 'Investors',class:''},
+        // { url: 'contact.html', title: 'Contact',class:''},
+        { url: 'index.html', title: 'Фотографии&nbsp;и&nbsp;видео',class:''},
+        { url: 'index.html', title: 'Купить билеты<br><small>на&nbsp;мероприятия</small>',class:Array('menu-button')}, 
         );
 
     var item = window.location.href;

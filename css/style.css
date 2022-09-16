@@ -286,7 +286,7 @@ h1 *, h2 *, h3 *, h4 *, h5 *, h6 *, .heading-1 *, .heading-2 *, .heading-3 *, .h
 
 h1,
 .heading-1 {
-	font-family: Xspace;
+	font-family: Book Antiqua;
 	font-size: 34px;
 	line-height: 0.8em !important;
 	margin-bottom: 25px;
@@ -317,7 +317,7 @@ h1,
 @media (min-width: 992px) {
 	h1,
 	.heading-1 {
-		font-size: 80px;
+		font-size: 72px;
 		line-height: 1.33333;
 	}
 
@@ -346,8 +346,8 @@ h2,
 
 h3,
 .heading-3 {
-	font-family: Xspace;
-	font-size: 20px;
+	font-family: Book Antiqua;
+	font-size: 30px;
 	line-height: 1.27;
 }
 
@@ -4629,7 +4629,7 @@ html .icon-md {
 }
 
 .post-boxed__type {
-	font-family: Xspace;
+	font-family: Book Antiqua;
 	font-size: 20px;
 	border: 1px solid #293c98;
 	border-radius: 8px;
@@ -4690,7 +4690,7 @@ html .icon-md {
 	content: "read more    →";
 	justify-content: space-between;
 	display: flex;
-	font-family: Xspace;
+	font-family: Book Antiqua;
 	align-self: bottom;
 	width: 100%;
 	
@@ -7787,7 +7787,7 @@ html .page .group-sm-justify .button {
 	color: #293c98;
 }
 
-.link-back {font-family: Xspace; color: #293c98; font-size: 14px;}
+.link-back {font-family: Book Antiqua; color: #293c98; font-size: 14px;}
 .link-back:before {content: "← ";}
 
 .bg-white[class*='section-'] + .bg-white[class*='section-'] {
@@ -31373,9 +31373,9 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 }
 
 @font-face {
-	font-family: 'Xspace';
-	src: url("../fonts/XspaceRegular.ttf");
-	src: url("../fonts/Xspace.otf") format("embedded-opentype"), url("../fonts/XspaceRegular.ttf") format("truetype");
+	font-family: 'Book Antiqua';
+	src: url("../fonts/Book AntiquaRegular.ttf");
+	src: url("../fonts/Book Antiqua.otf") format("embedded-opentype"), url("../fonts/Book AntiquaRegular.ttf") format("truetype");
 	font-weight: 400;
 	font-style: normal;
 }
