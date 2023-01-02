@@ -506,6 +506,7 @@
 		if ( isDesktop && !isNoviBuilder ) {
 			$().UItoTop( {
 				easingType:     'easeOutQuart',
+				scrollSpeed: 0, //remove if css smooth-scroll is not enabled
 				containerClass: 'ui-to-top fa fa-angle-up'
 			} );
 		}
