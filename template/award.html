@@ -17,7 +17,7 @@
     <!-- Page Loader-->
     <div id="page-loader">
       <div class="page-loader-body">
-        <div class="cssload-spinner">
+        <div class="cssload-spinner" style="display: none;">
           <div class="cssload-cube cssload-cube0"></div>
           <div class="cssload-cube cssload-cube1"></div>
           <div class="cssload-cube cssload-cube2"></div>
@@ -43,7 +43,7 @@
       <header class="section page-header">
         <!-- RD Navbar-->
         <div class="rd-navbar-wrap">
-          <nav class="rd-navbar" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-sm-device-layout="rd-navbar-fixed" data-md-layout="rd-navbar-static" data-md-device-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-static" data-lg-layout="rd-navbar-static" data-stick-up-clone="false" data-md-stick-up-offset="5px" data-lg-stick-up-offset="5px" data-md-stick-up="true" data-lg-stick-up="true">
+          <nav class="rd-navbar bg-yellow" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-sm-device-layout="rd-navbar-fixed" data-md-layout="rd-navbar-static" data-md-device-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-static" data-lg-layout="rd-navbar-static" data-stick-up-clone="false" data-md-stick-up-offset="1px" data-lg-stick-up-offset="1px" data-md-stick-up="true" data-lg-stick-up="true">
             <div class="rd-navbar-main-outer">
               <div class="rd-navbar-main">
                 <!-- RD Navbar Panel-->
@@ -51,8 +51,8 @@
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
                   <div class="rd-navbar-brand"><a class="brand" href="index.html">
-                      <div class="brand__name"><img class="brand__logo-dark" src="images/logo-default.png" alt=""/><img class="brand__logo-light" src="images/logo-inverse-237x35.png" alt="" width="237" height="35"/>
-                      </div><span class="brand__slogan text-uppercase">Полуостров</span></a></div>
+                      <div class="brand__name"><img class="brand__logo-dark" src="images/logo-default.png" alt=""/></div>
+                      <span class="brand__slogan text-uppercase">Полуостров<br><small>имени<br>Леонида&nbsp;Духовного</small></span></a></div>
                 </div>
                 <!-- RD Navbar Nav-->
                 <div class="rd-navbar-nav-wrap">
@@ -65,13 +65,15 @@
                   </div>
                   <!-- RD Navbar Nav-->
                   <ul class="rd-navbar-nav">
-                    <li class="active"><a href="index.html">Item1<span></span><span></span><span></span><span></span></a>
+                    <li class="active"><a href="https://award.poluostrov.com/">Премия 2022<span></span><span></span><span></span><span></span></a>
                     </li>
-                    <li><a href="#">Item2<span></span><span></span><span></span><span></span></a>
+                    <li><a href="https://poluostrov.com/index.html">История Клуба<span></span><span></span><span></span><span></span></a>
                     </li>
-                    <li><a href="#">Item3<span></span><span></span><span></span><span></span></a>
+                    <li><a href="https://poluostrov.com/index.html">Персоналии<span></span><span></span><span></span><span></span></a>
                     </li>
-                    <li><a href="#">Item4<span></span><span></span><span></span><span></span></a>
+                    <li><a href="https://poluostrov.com/index.html">Фотографии<br>и видео<span></span><span></span><span></span><span></span></a>
+                    </li>
+                    <li><a class="menu-button" href="https://poluostrov.com/index.html">Купить билеты<br><small>на мероприятия</small><span></span><span></span><span></span><span></span></a>
                     </li>
                   </ul>
                 </div>
@@ -106,23 +108,22 @@
       <section class="section section-md bg-gray-darker text-center">
         <div class="shell-fluid">
           <div class="range range-30">
-            <div class="cell-xs-12 cell-sm-4 cell-md-2 wow fadeInLeftSmall maximize-size">
+            <div class="cell-xs-12 cell-sm-4 cell-md-4 wow fadeInLeftSmall">
               <!-- Post boxed-->
               <article class="post-boxed bg-white">
                 <div class="post-boxed__main">
                   <h3 class="post-boxed__title text-uppercase text-center">Правила</h3>
-                  <ul class="list-marked mt-1">
+                  <ul class="list-marked mt-1" style="position: relative; left: -10px;">
                     <li>Песня должна быть бардовская</li>
                     <li>Песня должна была дебютировать в&nbsp;прошлом календарном году</li>
-                    <li>Одна песня на автора</li>
-                    <li><mark>Номинационное Жюри:</mark>
+                    <li><b>Номинационное Жюри:</b>
                         <ul class="list-unmarked mt-1" style="">
                             <li>Номинирует песни</li>
                             <li>Принимает заявки</li>
                             <li>Выбирает 10&nbsp;лучших</li>
                         </ul>
                     </li>
-                    <li><mark>Финальное Жюри:</mark>
+                    <li><b>Финальное Жюри:</b>
                         <ul class="list-unmarked mt-1">
                             <li> Выбирает лучшую песню из&nbsp;10</li>
                         </ul>
@@ -131,71 +132,86 @@
                 </div>
               </article>
             </div>
-            <div class="cell-xs-6 cell-sm-4 cell-md-3 wow fadeInLeftSmall" data-wow-delay=".15s">
+            <div class="cell-xs-6 cell-sm-4 cell-md-4 wow fadeInLeftSmall" data-wow-delay=".15s">
               <!-- Post boxed-->
               <article class="">
                   <h3 class="text-uppercase mb-2">Номинационное Жюри</h3>
-                <div class="fixed-height" style="height: 375px;">
-                <div class="box-centered box-width-6 text-left">
+                <div class="fixed-height" style="height: 225px;">
+                <div class="box-centered box-width-5 text-left free-flow">
+                <a href="https://ru.wikipedia.org/wiki/Кимельфельд,_Дмитрий_Исаакович">
                   <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                     <div class="unit__left">
-                        <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                        <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-Дмитрий-Кимельфельд.jpg" alt="" width="46" height="46"/>
                     </div>
                     <div class="unit__body">
                       <h6 class="">Дмитрий Кимельфельд</h6>
                     </div>
                   </div>
+                </a>
+                <a href="https://ru.wikipedia.org/wiki/Зарифьян,_Анэс_Гургенович">
                   <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                     <div class="unit__left">
-                        <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                        <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-Анэс-Зарифьян.jpg" alt="" width="46" height="46"/>
                     </div>
                     <div class="unit__body">
                       <h6 class="">Анэс Зарифьян</h6>
                     </div>
                   </div>
+                </a>
+                <a href="https://ru.wikipedia.org/wiki/Бикчентаев,_Дмитрий_Андреевич">
                   <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                     <div class="unit__left">
-                        <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                        <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-Дмитрий-Бикчентаев.jpg" alt="" width="46" height="46"/>
                     </div>
                     <div class="unit__body">
                       <h6 class="">Дмитрий Бикчентаев</h6>
                     </div>
                   </div>
+                </a>
+                <a href="http://www.bards.ru/person.php?id=3006">
                   <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                     <div class="unit__left">
-                        <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                        <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-Игорь-Грызлов.jpg" alt="" width="46" height="46"/>
                     </div>
                     <div class="unit__body">
                       <h6 class="">Игорь Грызлов</h6>
                     </div>
                   </div>
+                </a>
+                <a href="http://bard.ru.com/php/bards_song.php?name=%C3%EE%EC%E0%E7%EA%EE%E2_%C0">
                   <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                     <div class="unit__left">
-                        <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                        <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-Алексей-Гамазков.jpg" alt="" width="46" height="46"/>
                     </div>
                     <div class="unit__body">
                       <h6 class="">Алексей Гамазков</h6>
                     </div>
                   </div>
+                </a>
+                <!-- a href="" -->
                   <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                     <div class="unit__left">
-                        <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                        <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-Владимир-Блэй.jpg" alt="" width="46" height="46"/>
                     </div>
                     <div class="unit__body">
                       <h6 class="">Владимир Блэй</h6>
                     </div>
                   </div>
+                <!-- /a-->
+                <a href="http://www.kspus.org/Volic">
                   <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                     <div class="unit__left">
-                        <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                        <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-Валентин-Черняк.jpg" alt="" width="46" height="46"/>
                     </div>
                     <div class="unit__body">
-                      <h6 class="">Валентин Черняк</h6>
+                      <h6 class="">Волик Черняк</h6>
                     </div>
                   </div>
+                </a>
+                <a href="http://bard.ru.com/php/bards_af.php?name=%C4%EE%EB%E3%EE%E9_%C8">
                   <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                     <div class="unit__left">
-                        <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                        <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-Иосиф-Долгой.jpg" alt="" width="46" height="46"/>
                     </div>
                     <div class="unit__body">
                       <h6 class="">Иосиф Долгой</h6>
@@ -203,54 +219,63 @@
                   </div>
                 </div>
                 </div>
+                </a>
                 <p class="text-center text-faded">(список будет дополняться)</p>
               </article>
             </div>
 
-            <div class="cell-xs-6 cell-sm-4 cell-md-3 wow fadeInLeftSmall" data-wow-delay=".15s">
+            <div class="cell-xs-6 cell-sm-4 cell-md-4 wow fadeInLeftSmall" data-wow-delay=".15s">
                 <!-- Post boxed-->
                 <article class="">
                     <h3 class="text-uppercase mb-2">Финальное Жюри</h3>
-                  <div class="box-centered box-width-6 text-left">
+                  <div class="box-centered box-width-5 text-left">
+                <a href="https://ru.wikipedia.org/wiki/Городницкий,_Александр_Моисеевич">
                     <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                       <div class="unit__left">
-                          <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                          <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-финал-Александр-Городницкий.jpg" alt="" width="46" height="46"/>
                       </div>
                       <div class="unit__body">
                         <h6 class="">Александр Городницкий</h6>
                       </div>
                     </div>
+                </a>
+                <a href="https://ru.wikipedia.org/wiki/Шаов,_Тимур_Султанович">
                     <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                       <div class="unit__left">
-                          <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                          <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-финал-Тимур-Шаов.jpg" alt="" width="46" height="46"/>
                       </div>
                       <div class="unit__body">
                         <h6 class="">Тимур Шаов</h6>
                       </div>
                     </div>
+                </a>
+                <a href="https://ru.wikipedia.org/wiki/Гладков,_Григорий_Васильеви">
                     <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                       <div class="unit__left">
-                          <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                          <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-финал-Григорий-Гладков.jpg" alt="" width="46" height="46"/>
                       </div>
                       <div class="unit__body">
                         <h6 class="">Григорий Гладков</h6>
                       </div>
                     </div>
+                </a>
+                <a href="https://ru.wikipedia.org/wiki/Долина,_Вероника_Аркадьевн">
                     <div class="unit unit-horizontal unit-middle unit-spacing-xs">
                       <div class="unit__left">
-                          <img class="post-boxed__avatar" src="images/user-6-46x46.jpg" alt="" width="46" height="46"/>
+                          <img class="post-boxed__avatar" src="http://poluostrov.com/images/жюри-финал-Вероника-Долина.jpg" alt="" width="46" height="46"/>
                       </div>
                       <div class="unit__body">
                         <h6 class="">Вероника Долина</h6>
                       </div>
                     </div>
                   </div>
+                </a>
                   <p class="text-center text-faded">(список будет дополняться)</p>
                 </article>
               </div>
 
 
-            <div class="cell-xs-12 cell-sm-12 cell-md-4 wow fadeInLeftSmall" data-wow-delay=".3s">
+            <div class="cell-xs-12 cell-sm-12 cell-md-6 wow fadeInLeftSmall" data-wow-delay=".3s">
               <!-- Post boxed-->
               <article class="post-boxed bg-yellow free-flow mb-1">
                 <div class="post-boxed__main">
@@ -258,40 +283,45 @@
                   <p class="text-center">Еще не определены</p>
                 </div>
               </article>
-              <article class="post-boxed post-boxed-outline free-flow">
-                <div class="post-boxed__main text-center">
-                  <h3 class="post-boxed__title text-uppercase text-center">Номинированные Песни за 2022</h3>
-                  <div class="fixed-height" style="height: 100px;">
-                  <article class="post-boxed nomination nomination-compact">
-                    <div class="post-boxed__stars stars-4" id="nominate-number">★★★★★</div>
-                    <ul class="post-boxed__meta">
-                        <li class="mdi mdi-thumb-up"></li>
-                        <li class="mdi mdi-thumb-down"></li>
-                    </ul>
-                    <div class="post-boxed__main">
-                     <a href="#" class="icon-play"><h3 class="post-boxed__title">В любые времена</h3></a>
-                      <p class="post-boxed__author">Александр Дов</p>
-                      <p class="post-boxed__music">Александр Дов</p>
-                    </div>
-                  </article>
-                  <article class="post-boxed nomination nomination-compact">
-                    <div class="post-boxed__stars stars-3" id="nominate-number">★★★★★</div>
-                    <ul class="post-boxed__meta">
-                        <li class="mdi mdi-thumb-up"></li>
-                        <li class="mdi mdi-thumb-down"></li>
-                    </ul>
-                    <div class="post-boxed__main">
-                        <a href="#" class="icon-play"><h3 class="post-boxed__title">Слушай сынок</h3></a>
-                      <p class="post-boxed__author">Павел Фахрудтинов</p>
-                      <p class="post-boxed__music">Павел Фахрудтинов</p>
-                    </div>
-                  </article>
-                </div>
-                  <p class="mt-1 mb-0"><a href="#nominated-songs">Полный список &darr;</a></p>
-                  <p class="mt-1 mb-0"><a href="#nominate" class="button button-primary-outline button-ujarak button-size-1">Номинировать песню</a></p>
-                
-              </article>
               </div>
+
+              <div class="cell-xs-12 cell-sm-12 cell-md-6 wow fadeInLeftSmall" data-wow-delay=".3s">
+                <!-- Post boxed-->
+                <article class="post-boxed post-boxed-outline bg-yellow-faded free-flow">
+                  <div class="post-boxed__main text-center">
+                    <h3 class="post-boxed__title text-uppercase text-center">Номинированные Песни за 2022</h3>
+                    <div class="fixed-height" style="height: 100px;">
+                    <article class="post-boxed nomination nomination-compact">
+                      <div class="post-boxed__stars stars-4" id="nominate-number">★★★★★</div>
+                      <ul class="post-boxed__meta">
+                          <li class="mdi mdi-thumb-up"></li>
+                          <li class="mdi mdi-thumb-down"></li>
+                      </ul>
+                      <div class="post-boxed__main">
+                       <a href="#" class="icon-play"><h3 class="post-boxed__title">В любые времена</h3></a>
+                        <p class="post-boxed__author">Александр Дов</p>
+                        <p class="post-boxed__music">Александр Дов</p>
+                      </div>
+                    </article>
+                    <article class="post-boxed nomination nomination-compact">
+                      <div class="post-boxed__stars stars-3" id="nominate-number">★★★★★</div>
+                      <ul class="post-boxed__meta">
+                          <li class="mdi mdi-thumb-up"></li>
+                          <li class="mdi mdi-thumb-down"></li>
+                      </ul>
+                      <div class="post-boxed__main">
+                          <a href="#" class="icon-play"><h3 class="post-boxed__title">Слушай сынок</h3></a>
+                        <p class="post-boxed__author">Павел Фахрудтинов</p>
+                        <p class="post-boxed__music">Павел Фахрудтинов</p>
+                      </div>
+                    </article>
+                  </div>
+                    <p class="mt-1 mb-0"><a href="#nominated-songs">Полный список &darr;</a></p>
+                    <p class="mt-1 mb-0"><a href="#nominate" class="button button-primary-outline button-ujarak button-size-1">Номинировать песню</a></p>
+                  
+                </article>
+                </div>
+
             </div>
           </div>
       </section>

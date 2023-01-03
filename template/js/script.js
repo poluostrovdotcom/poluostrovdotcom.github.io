@@ -797,6 +797,7 @@
 						"counter": i
 					},
 					beforeSubmit: function (arr, $form, options) {
+
 						if (isNoviBuilder)
 							return;
 
@@ -852,14 +853,18 @@
 							form.addClass('form-in-process');
 
 							if (output.hasClass("snackbars")) {
-								output.html('<p><span class="icon text-middle fa fa-circle-o-notch fa-spin icon-xxs"></span><span>Sending</span></p>');
+								output.html('<p><span class="icon text-middle fa fa-circle-o-notch fa-spin icon-xxs"></span><span>Отправляем</span></p>');
 								output.addClass("active");
 							}
+
+							var formdata = collectData();
+							updateSheets(formdata);
+
 						} else {
 							return false;
 						}
 					},
-					error: function (result) {
+					error: function (result) { /* there's no actual form submit because it's JS only
 						if (isNoviBuilder)
 							return;
 
@@ -871,9 +876,9 @@
 
 						if (formHasCaptcha) {
 							grecaptcha.reset();
-						}
+						} */
 					},
-					success: function (result) {
+					success: function (result) { /* there's no actual form submit because there's JS only 
 						if (isNoviBuilder)
 							return;
 
@@ -917,7 +922,7 @@
 						setTimeout(function () {
 							output.removeClass("active error success");
 							form.removeClass('success');
-						}, 3500);
+						}, 3500); */
 					}
 				});
 			}
@@ -993,3 +998,72 @@
 
 	} );
 }());
+
+function collectData()
+{
+	var formdata = {};
+	$(".form-input").each(function(index) {
+		formdata[String($(this).attr('name'))] = $(this).attr('value');
+	});
+	return formdata;
+}
+
+function updateSheets(formdata) {
+	//web app url
+	var g_url = "https://script.google.com/macros/s/AKfycbwo40J-sZzmxsLaODCs9Yqj9cBJ9jYTYMR09ff3_Uuz7ZF2hwB7_8ELG778C32JFRAv/exec";
+
+	/* just in case request won't be working anymore 
+	var iframe = document.createElement('iframe');
+	iframe.onload = function() { formClear(true,true,"Order sent!"); }; //there's no access to what the message is so we assume it's successful
+	iframe.style = "visibility: hidden; position: absolute; top: 0; left: 0; width: 1px; height: 1px;";
+	iframe.src = g_url + dataurl; 
+	document.body.appendChild(iframe);
+	// iframe displays 403 but spreadsheet is nevertheless updated
+	*/
+
+	var xhr = $.ajax({
+		url: g_url,
+		method: "GET",
+		type: "GET",
+		dataType: "json",
+		data: formdata
+	  }).success(
+		  function () { formClear(true,"Песня успешно номинирована!"); }
+	  ).error (
+		function (xhr) { formClear(false,"Не удалось добавить данные",true,false); }
+	  );
+
+}
+
+
+function formClear(status,success_message,required=true,reset=true) {
+	var form = $(".rd-mailform"),
+		output = $("#" + form.attr("data-form-output"));
+
+    	if(status==required) {
+			var cls = "success", msg = success_message, icon = "mdi-check";
+		}
+		else {
+			var cls = "error", msg = "Ошибка: "+String(status), icon = "mdi-alert-outline";
+		}
+
+		form
+		.addClass(cls)
+		.removeClass('form-in-process');
+
+		if (reset) form.trigger('reset');
+
+		output.text(msg);
+
+		if (output.hasClass("snackbars")) {
+			output.html('<p><span class="icon text-middle mdi '+icon+' icon-xxs"></span><span>' + msg + '</span></p>');
+			} 
+		else {
+				output.addClass("active "+cls);
+			}
+
+		setTimeout(function () {
+			output.removeClass("active");
+		}, 3500);
+
+}
