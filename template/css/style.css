@@ -7152,9 +7152,9 @@ html:not(.tablet):not(.mobile) .thumb-alice:hover .thumb-alice__inner {
 	padding: 9px 16px;
 	margin-left: auto;
 	margin-right: auto;
-	color: #ffffff;
+	color: #101010;
 	text-align: left;
-	background-color: #101010;
+	background: linear-gradient(35deg, #f3ef84 0%, #d5bb59 60%);
 	border-radius: 0;
 	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
 	font-size: 14px;

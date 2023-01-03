@@ -1002,7 +1002,7 @@
 function collectData()
 {
 	var formdata = {};
-	$(".form-input").each(function(index) {
+	$("#nominate-form .form-input").each(function(index) {
 		formdata[String($(this).attr('name'))] = $(this).attr('value');
 	});
 	return formdata;
