@@ -1,6 +1,9 @@
 /**
  * Global variables
  */
+
+const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+
 "use strict";
 (function () {
 	var isNoviBuilder = window.xMode;
@@ -858,7 +861,8 @@
 							}
 
 							var formdata = collectData();
-							updateSheets(formdata);
+							formdata["id"] = Date.now()+genRanHex(6);
+							updateSheets(formdata,"nomination");
 
 						} else {
 							return false;
@@ -999,6 +1003,14 @@
 	} );
 }());
 
+function alert_message(msg) {
+	var output = $("#" + $(".rd-mailform").attr("data-form-output"));
+	if (output.hasClass("snackbars")) {
+		output.html('<p><span class="icon text-middle fa fa-circle-o-notch fa-spin icon-xxs"></span><span>'+msg+'</span></p>');
+		output.addClass("active");
+	}
+}
+
 function collectData()
 {
 	var formdata = {};
@@ -1008,9 +1020,10 @@ function collectData()
 	return formdata;
 }
 
-function updateSheets(formdata) {
+function updateSheets(formdata,sheet) {
 	//web app url
-	var g_url = "https://script.google.com/macros/s/AKfycbwo40J-sZzmxsLaODCs9Yqj9cBJ9jYTYMR09ff3_Uuz7ZF2hwB7_8ELG778C32JFRAv/exec";
+	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbwo40J-sZzmxsLaODCs9Yqj9cBJ9jYTYMR09ff3_Uuz7ZF2hwB7_8ELG778C32JFRAv/exec";
+	if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbwysfyDy_hnKbiBALhC37-ei_B7-LZnngHHVEJvAQJlUtceS-YzzCbss8QWKOay_Imz/exec";
 
 	/* just in case request won't be working anymore 
 	var iframe = document.createElement('iframe');
@@ -1028,9 +1041,23 @@ function updateSheets(formdata) {
 		dataType: "json",
 		data: formdata
 	  }).success(
-		  function () { formClear(true,"Песня успешно номинирована!"); }
+		  function () { 
+			if (sheet=="nomination") formClear(true,"Песня успешно номинирована!"); 
+			if (sheet=="rate") {
+				formClear(true,"Ваш голос учтен!");
+				setCookie(formdata['id'],formdata['stars'],365);
+				votes_by_id[formdata['id']]['votes']++;
+				votes_by_id[formdata['id']]['total'] = votes_by_id[formdata['id']]['total'] + parseInt(formdata['stars']);
+				$(".post-boxed__stars[rate-id='"+formdata['id']+"']").attr("class",("post-boxed__stars voted "+getRating(formdata['id'])));
+
+			}
+
+		}
 	  ).error (
-		function (xhr) { formClear(false,"Не удалось добавить данные",true,false); }
+		function (xhr) { 
+			if (sheet=="nomination") formClear(false,"Не удалось добавить данные",true,false); 
+			if (sheet=="rate") formClear("Перезагрузите страницу и попробуйте еще раз!",false); 
+		}
 	  );
 
 }
@@ -1067,3 +1094,147 @@ function formClear(status,success_message,required=true,reset=true) {
 		}, 3500);
 
 }
+
+function readSheets(sheet_url, success_function, target_table) {
+	var xhr = $.ajax({
+		url: sheet_url,
+		dataType: "text"
+	  }).success(
+		  function (data) { 		
+			var sheet_data = data.split(/\r?\n|\r/);
+			var keys = sheet_data[0].split(',');
+			var new_data = [];
+			for(var i = 1; i<sheet_data.length; i++)
+    		{
+				var tmp = sheet_data[i].split(',');
+				if (tmp[tmp.length-1]=="1")
+				{
+					sheet_data[i] = {};
+					for (var j=0; j<keys.length-1; j++) {
+						sheet_data[i][keys[j]] = tmp[j];
+					}
+					new_data.push(sheet_data[i]);
+				}
+			}
+			success_function(new_data,target_table);
+
+		   }
+	  ).error (
+		function (xhr) { return false; }
+	  );
+
+}
+
+function setCookie(cname, cvalue, exdays) {
+	const d = new Date();
+	d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	let expires = "expires="+ d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+function getCookie(cname) {
+	let name = cname + "=";
+	let decodedCookie = decodeURIComponent(document.cookie);
+	let ca = decodedCookie.split(';');
+	for(let i = 0; i <ca.length; i++) {
+	  let c = ca[i];
+	  while (c.charAt(0) == ' ') {
+		c = c.substring(1);
+	  }
+	  if (c.indexOf(name) == 0) {
+		return c.substring(name.length, c.length);
+	  }
+	}
+	return "";
+  }
+
+function getRating(id,type='css') {
+	if (type=='css') return "stars-"+Math.round(votes_by_id[id]['total']/votes_by_id[id]['votes']/0.5)*5;
+	if (type=='exact') return Math.round(votes_by_id[id]['total']/votes_by_id[id]['votes']*100)/100;
+	if (type=='total') return votes_by_id[id]['total'];
+	if (type=='votes') return votes_by_id[id]['votes'];
+}
+
+function processNominations(data,target_table) {
+	if (data.length<1) {
+		target_table.closest('.fixed-height').addClass('hide');
+		target_table.closest('.post-boxed__main').find('.table-header').addClass('hide');
+		target_table.closest('.cell-md-6').removeClass('loading');
+		$("#music-trophy").removeClass('hide');
+		return;
+	}
+	var row = target_table.find("tr");
+	row = row.eq(row.length-1);
+	var n = row.length-1;
+	for (var i=0; i<data.length; i++) {
+		row.find(".cell-name").eq(0).text(data[i]["name"]);
+		var author = (data[i]["music"]==data[i]["lyrics"]) ? data[i]["music"] : data[i]["music"] + "&nbsp;/ " + data[i]["lyrics"];
+ 		row.find(".cell-author").eq(0).html(author);
+		var rater = row.find(".cell-rate .post-boxed__stars").eq(0);
+		rater.attr("class","post-boxed__stars");
+		if (getCookie(data[i]["id"])!="") rater.addClass('voted');
+		rater.attr("rate-id",data[i]["id"]);
+		rater.attr("data-toggle","modal");
+		rater.attr("data-target","#exampleModal");
+		rater.addClass(getRating(data[i]["id"]));
+		if (data[i]["link"]!="") {
+			row.find(".cell-link a").eq(0).attr("href",data[i]["link"]);
+		}
+		else row.find(".cell-link a").eq(0).addClass("hide");
+		target_table.find("tbody").append("<tr>"+row.html()+"</tr>");
+	}
+	row.remove();
+	target_table.closest('.cell-md-6').removeClass('loading');
+	target_table.removeClass('hide');
+
+	$(".post-boxed__stars").each( function() {
+		$(this).find("span").each( function(index) {
+			$(this).on("click", function() {
+				var id = $(this).closest(".post-boxed__stars").attr("rate-id");
+				var name = "«" + $(this).closest("tr").find('.cell-name').text()+"»";
+				var author = $(this).closest("tr").find('.cell-author').text();
+				$("#modal-name").text(name);
+				$("#modal-author").text(author);
+				$("#modal-votes").text(getRating(id,'votes'));
+				$("#modal-average").text(getRating(id,'exact'));
+				if (!$(".post-boxed__stars[rate-id='"+id+"']").hasClass('voted'))
+				{
+				$("#radio-container").removeClass('hide');
+				$("#your-vote").addClass('hide');
+				$("#modal-submit").text = "Голосовать";
+				$("input:radio[name=vote]").eq(index).attr("checked",true);
+				$("#modal-submit").on("click", function() {
+						var vote = $("input:radio[name='vote']:checked").val();
+						var formdata = { 'id' : id, 'stars' : vote, 'ip_address' : user_ip, 'time' : fullDate(new Date()) };
+						updateSheets(formdata,'rate');
+						alert_message('Отправляем оценку');
+						$('#modal_closer').trigger('click');
+						$(".post-boxed__stars[rate-id='"+formdata['id']+"']").addClass('voted');
+//					else {$('#exampleModal').modal('toggle'); alert("вы уже проголосовали за эту песню!");  }
+					//alert(id + ":" + vote + ":" + name + ":" + author);
+				});
+				}
+				else {
+					$("#radio-container").addClass('hide');
+					$("#your-vote").removeClass('hide');
+					$("#modal-submit").text = "Закрыть";
+					$("#modal-submit").on("click", function() { $('#modal_closer').trigger('click'); });
+
+				}
+			});
+		});
+	} );
+
+}
+
+function fullDate(now) {
+	var result = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"});
+	return result;
+	//return now.getFullYear() + "/" + String(now.getMonth()+1).padStart(2,"0") + "/" + String(now.getDate()).padStart(2,"0") + " " + now.getHours().padStart(2,"0") + ":" + now.getMinutes().padStart(2,"0");
+}
+
+var user_ip = "";
+
+$.getJSON("https://api.ipify.org?format=json", function(data) {	user_ip = data.ip;});
+
+
