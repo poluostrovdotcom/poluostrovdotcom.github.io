@@ -206,6 +206,8 @@ body {
 th.cell-link {font-size: 9px;}
 th.cell-rate {min-width: 130px; padding-right: 30px !important;}
 
+th.cell-rate.smaller {min-width: 100px; padding-right: 15px !important;}
+
 td.cell-name {font-size: 17px;}
 td.cell-author {font-size: 13px;}
 

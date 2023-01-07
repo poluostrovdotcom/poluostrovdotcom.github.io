@@ -1186,6 +1186,7 @@ function processNominations(data,target_table) {
 	row.remove();
 	target_table.closest('.cell-md-6').removeClass('loading');
 	target_table.removeClass('hide');
+	if (target_table.outerHeight()<300) target_table.closest('.post-boxed__main').find('th.cell-rate').addClass('smaller');
 
 	$(".post-boxed__stars").each( function() {
 		$(this).find("span").each( function(index) {
