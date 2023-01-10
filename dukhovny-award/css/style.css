@@ -4639,7 +4639,7 @@ html .icon-md {
 .post-boxed__stars {
 	font-size: 30px;
 	display: inline-block;
-	background: orange;
+	background: #555555;
     -webkit-text-fill-color: transparent !important;
     -webkit-background-clip: text !important;
 	cursor: pointer;

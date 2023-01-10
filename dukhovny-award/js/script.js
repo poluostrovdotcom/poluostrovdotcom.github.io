@@ -1104,11 +1104,13 @@ function readSheets(sheet_url, success_function, target_table) {
 		  function (data) { 		
 			var sheet_data = data.split(/\r?\n|\r/);
 			var keys = sheet_data[0].split(',');
+			var show_id = -1;
+			for (var i=0; i<keys.length; i++) if (keys[i]=='show') { show_id = i; break; }
 			var new_data = [];
 			for(var i = 1; i<sheet_data.length; i++)
     		{
 				var tmp = sheet_data[i].split(',');
-				if (tmp[tmp.length-1]=="1")
+				if (tmp[show_id]=="1")
 				{
 					sheet_data[i] = {};
 					for (var j=0; j<keys.length-1; j++) {
@@ -1150,10 +1152,16 @@ function getCookie(cname) {
   }
 
 function getRating(id,type='css') {
-	if (type=='css') return "stars-"+Math.round(votes_by_id[id]['total']/votes_by_id[id]['votes']/0.5)*5;
-	if (type=='exact') return Math.round(votes_by_id[id]['total']/votes_by_id[id]['votes']*100)/100;
-	if (type=='total') return votes_by_id[id]['total'];
-	if (type=='votes') return votes_by_id[id]['votes'];
+	if (votes_by_id[id]) {
+		if (type=='css') return "stars-"+Math.round(votes_by_id[id]['total']/votes_by_id[id]['votes']/0.5)*5;
+		if (type=='exact') return Math.round(votes_by_id[id]['total']/votes_by_id[id]['votes']*100)/100;
+		if (type=='total') return votes_by_id[id]['total'];
+		if (type=='votes') return votes_by_id[id]['votes'];
+	}
+	else {
+		if ((type=='votes')||(type=='exact')) return 0;
+		return "";
+	}
 }
 
 function processNominations(data,target_table) {
