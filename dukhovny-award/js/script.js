@@ -862,6 +862,7 @@ const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 
 
 							var formdata = collectData();
 							formdata["id"] = Date.now()+genRanHex(6);
+							formdata["time"] = fullDate(new Date());
 							updateSheets(formdata,"nomination");
 
 						} else {
