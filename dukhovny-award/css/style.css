@@ -1597,6 +1597,7 @@ a.box-triangle__aside:hover .box-triangle__image {
 	padding-right: 32px;
 	font-size: 14px;
 	line-height: 1.7;
+	text-transform: capitalize;
 }
 
 .breadcrumbs-custom__path li:after {
@@ -6646,7 +6647,7 @@ html:not(.tablet):not(.mobile).ie-10 .thumb-janez__content::after, html:not(.tab
 	display: -webkit-flex;
 	display: flex;
 	text-align: center;
-	background-color: #f3ef84;
+	background-color: #101010;
 }
 
 .thumb-ruby .thumb-ruby__caption {
@@ -7970,6 +7971,11 @@ html .page .group-sm-justify .button {
 
 .bg-yellow-faded.loading {
 	background: url("../images/preloader_black.gif") center no-repeat, linear-gradient(170deg,rgba(243,237,132,0.1) 0%, rgba(213,187,89,0.05) 60%), #101010 !important
+}
+
+.bg-gray-darker.loading {
+	background: url("../images/preloader_black.gif") center no-repeat, #101010!important;
+	background-blend-mode: screen;
 }
 
 .bg-dark-gradient {
