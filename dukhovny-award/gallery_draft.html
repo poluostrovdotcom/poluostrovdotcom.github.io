@@ -192,7 +192,7 @@
 	    target_layer.removeClass('hide');
     }
 
-    $.getJSON('http://api.allorigins.win/get?url=https%3A//drive.google.com/drive/folders/1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7%3Ffbclid%3DIwAR0_rKGD_DXcGfGh91JpO-t0RIK4qWsBqqAMCmjaW4w0QBoXAsAWhiDyCS4&callback=?', function (data) {
+    $.getJSON('https://api.allorigins.win/get?url=https%3A//drive.google.com/drive/folders/1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7%3Ffbclid%3DIwAR0_rKGD_DXcGfGh91JpO-t0RIK4qWsBqqAMCmjaW4w0QBoXAsAWhiDyCS4&callback=?', function (data) {
 
         var sample_gallery = parseGDrive(data.contents);
         $(".gallery-title").text(sample_gallery['name']);
