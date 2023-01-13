@@ -165,11 +165,26 @@
             
       }
 
+      function parseGEmbedded(data) {
+        data = data.split('id="entry-');
+        var filter_data = Array();
+        var result = {};
+        result['name'] = data[0].split('<title>')[1].split('</title>')[0];
+        for (var i=1; i<data.length; i++) {
+          filter_data.push({});
+          filter_data[filter_data.length-1]['id'] = data[i].split('" ')[0];
+          filter_data[filter_data.length-1]['label'] = data[i].split('flip-entry-title">')[1].split('.')[0];
+        }
+        result['content'] = filter_data;
+
+        return result;
+            
+      }
+
     function displayGallery(data,target_layer) {
         var item = target_layer.find(".isotope-item");
     	item = item.eq(item.length-1);
     	for (var i=0; i<data.length; i++) {
-            console.log(i);
 	    	item.find(".thumb-ruby__text").text(data[i]["label"]);
             item.find(".thumb-ruby__image").attr("src",'https://drive.google.com/thumbnail?authuser=0&sz=w400&id='+data[i]['id']);
             item.find(".thumb-ruby").attr("href",'https://drive.google.com/u/0/uc?id='+data[i]['id']+'&export=download');
@@ -192,18 +207,22 @@
 	    target_layer.removeClass('hide');
     }
 
-    $.getJSON('https://api.allorigins.win/get?url=https%3A//drive.google.com/drive/folders/1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7%3Ffbclid%3DIwAR0_rKGD_DXcGfGh91JpO-t0RIK4qWsBqqAMCmjaW4w0QBoXAsAWhiDyCS4&callback=?', function (data) {
+    
+    //$.getJSON('https://api.allorigins.win/get?url=https%3A//drive.google.com/drive/mobile/folders/1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7&callback=?', function (data) {
+        $.getJSON('https://api.allorigins.win/get?url=https%3A//drive.google.com/embeddedfolderview?id=1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7&callback=?', function (data) {
+        console.log(data.contents);
 
-        var sample_gallery = parseGDrive(data.contents);
+        var sample_gallery = parseGEmbedded(data.contents);
         $(".gallery-title").text(sample_gallery['name']);
         displayGallery(sample_gallery['content'],$(".isotope"));
 
 
     });
 
+
     /*
         var xhr = $.ajax({
-          url: "google_drive_copy.html",
+          url: "google_drive_mobile_copy.html",
           method: "GET",
           type: "GET",
           dataType: "html"
@@ -217,8 +236,7 @@
           function (xhr) { 
             console.log(xhr);
           }
-          );
-    */
+          ); */
 
 
 
