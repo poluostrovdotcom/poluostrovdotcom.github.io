@@ -6,21 +6,68 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" property="og:description" content="Премия Имени Леонида Духовного за лучшую бардовскую песню 2022 года. Памяти барда, поэта, руководителя клубов и фестивалей Леонида Духовного." />
+    <meta name="description" property="og:description" content="Aрхив фото и видео Леонида Духовного" />
     <meta name="author" content="КСП Полуостров" />
-    <meta name="image" property="og:image" content="http://poluostrov.com/dukhovny-award/images/award-preview.jpg">
+    <meta name="image" property="og:image" content="http://poluostrov.com/poluostrov-preview.jpg">
     <meta name="robots" content="all">
     <meta name="googlebot" content="all">
-    <meta property="og:url"                content="https://poluostrov.com/dukhovny-award/" />
-    <meta property="og:type"               content="award" />
-    <meta property="og:title"              content="Премия Им. Леонида Духовного" />
+    <meta property="og:url"                content="https://poluostrov.com/" />
+    <meta property="og:type"               content="gallery" />
+    <meta property="og:title"              content="Фото и Видео | Полуостров Им. Леонида Духовного" />
     <meta charset="utf-8">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <!-- Stylesheets-->
     <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="dukhovny-award/css/style.css">
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
   </head>
+  <script>
+
+  const drive_preload = {
+    api_key: "AIzaSyCqC17-M7h5Bgr8BuEznkCrZ9RFFLyNWUI",
+    children_loaded: false,
+    self_loaded: false,
+    follow: function () {},
+    id: "",
+    self: {},
+    children: {},
+    fetchList: function() {
+      fetch("https://www.googleapis.com/drive/v3/files?key="+this.api_key+"&q=%27"+this.id+"%27%20in%20parents")
+      .then(response => response.json())
+      .then( data => this.setList(data))
+      .catch(function (err) { console.log(err);} );
+    },
+    setList: function(data) {
+      this.children = data;
+      this.children_loaded = true;
+      //this.maybeExecute();
+    },
+    fetchInfo: function() {
+      fetch("https://www.googleapis.com/drive/v3/files/"+this.id+"/?key="+this.api_key)
+      .then(response => response.json())
+      .then( data => this.setInfo(data))
+      .catch(function (err) { console.log(err);} );
+    },
+    setInfo(data) {
+      this.self = data;
+      this.self_loaded = true;
+      //this.maybeExecute();
+    },
+    maybeExecute() {
+      if (this.children_loaded && this.self_loaded) this.follow(this);
+    },
+    init(id,onBothLoad) {
+      this.id = id;
+      this.follow = onBothLoad;
+      this.fetchInfo();
+      this.fetchList();
+    }
+}
+
+drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
+
+
+  </script>
   <body>
     <!-- Page Loader-->
     <div id="page-loader">
@@ -59,7 +106,7 @@
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
                   <div class="rd-navbar-brand"><a class="brand" href="index.html">
-                      <div class="brand__name"><img class="brand__logo-dark" src="images/logo-default.png" alt=""/></div>
+                      <div class="brand__name"><img class="brand__logo-dark" src="dukhovny-award/images/logo-default.png" alt=""/></div>
                       <span class="brand__slogan text-uppercase">Полуостров<br><small>имени<br>Леонида&nbsp;Духовного</small></span></a></div>
                 </div>
                 <!-- RD Navbar Nav-->
@@ -73,13 +120,13 @@
                   </div>
                   <!-- RD Navbar Nav-->
                   <ul class="rd-navbar-nav">
-                    <li><a href="https://award.poluostrov.com/">Премия 2022<span></span><span></span><span></span><span></span></a>
+                    <li><a href="https://poluostrov.com/dukhovny-award/">Премия 2022<span></span><span></span><span></span><span></span></a>
                     </li>
                     <li><a href="https://poluostrov.com/index.html">История Клуба<span></span><span></span><span></span><span></span></a>
                     </li>
                     <li><a href="https://poluostrov.com/index.html">Персоналии<span></span><span></span><span></span><span></span></a>
                     </li>
-                    <li class="active"><a href="https://poluostrov.com/index.html">Фото и видео<span></span><span></span><span></span><span></span></a>
+                    <li class="active"><a href="https://poluostrov.com/gallery_draft.html">Фото и видео<span></span><span></span><span></span><span></span></a>
                     </li>
                     <li><a class="menu-button" href="https://poluostrov.com/index.html">Купить билеты<br><small>на мероприятия</small><span></span><span></span><span></span><span></span></a>
                     </li>
@@ -128,7 +175,7 @@
           <div class="range range-sm-center">
             <div class="cell-sm-10 cell-md-8 cell-lg-6 mt-4">
               <!-- Brand--><a class="brand" href="index.html">
-                <div class="brand__name" style="overflow: unset; height: auto;"><img src="images/logo-inverse.png" alt="" style="height:200px;"/>
+                <div class="brand__name" style="overflow: unset; height: auto;"><img src="dukhovny-award/images/logo-inverse.png" alt="" style="height:200px;"/>
                 </div>
               <ul class="list-icons list-inline-sm">
                 <li><a class="icon icon-sm fa fa-instagram icon-style-camera" href="#"><span></span><span></span><span></span><span></span></a></li>
@@ -149,46 +196,14 @@
     <script src="js/script.js"></script>
     <script>
 
-    function parseGDrive(data) {
-        data = data.split('data-id="');
-        var filter_data = Array();
-        var result = {};
-        result['name'] = data[0].split('<title>')[1].split(' - Google')[0];
-        for (var i=1; i<data.length; i++) {
-          filter_data.push({});
-          filter_data[filter_data.length-1]['id'] = data[i].split('" ')[0];
-          filter_data[filter_data.length-1]['label'] = data[i].split('data-tooltip="')[1].split('.')[0];
-        }
-        result['content'] = filter_data;
-
-        return result;
-            
-      }
-
-      function parseGEmbedded(data) {
-        data = data.split('id="entry-');
-        var filter_data = Array();
-        var result = {};
-        result['name'] = data[0].split('<title>')[1].split('</title>')[0];
-        for (var i=1; i<data.length; i++) {
-          filter_data.push({});
-          filter_data[filter_data.length-1]['id'] = data[i].split('" ')[0];
-          filter_data[filter_data.length-1]['label'] = data[i].split('flip-entry-title">')[1].split('.')[0];
-        }
-        result['content'] = filter_data;
-
-        return result;
-            
-      }
-
     function displayGallery(data,target_layer) {
-        var item = target_layer.find(".isotope-item");
+      var item = target_layer.find(".isotope-item");
     	item = item.eq(item.length-1);
     	for (var i=0; i<data.length; i++) {
-	    	item.find(".thumb-ruby__text").text(data[i]["label"]);
+	    	item.find(".thumb-ruby__text").text(data[i]["name"]);
             item.find(".thumb-ruby__image").attr("src",'https://drive.google.com/thumbnail?authuser=0&sz=w400&id='+data[i]['id']);
             item.find(".thumb-ruby").attr("href",'https://drive.google.com/u/0/uc?id='+data[i]['id']+'&export=download');
-            item.find(".thumb-ruby").attr("data-sub-html",data[i]["label"]);
+            item.find(".thumb-ruby").attr("data-sub-html",data[i]["name"]);
 	    	target_layer.find(".row").append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 isotope-item">'+item.html()+"</div>");
 	    }
 	    item.remove();
@@ -207,38 +222,15 @@
 	    target_layer.removeClass('hide');
     }
 
-    
-    //$.getJSON('https://api.allorigins.win/get?url=https%3A//drive.google.com/drive/mobile/folders/1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7&callback=?', function (data) {
-        $.getJSON('https://api.allorigins.win/get?url=https%3A//drive.google.com/embeddedfolderview?id=1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7&callback=?', function (data) {
-        console.log(data.contents);
+    function maybeLoad() {
+      if (drive_preload.self_loaded&&drive_preload.children_loaded) {
+        $(".gallery-title").text(drive_preload.self.name);
+        displayGallery(drive_preload.children.files,$(".isotope"));
+      }
+      else setTimeout( maybeLoad, 1000);
+    }
 
-        var sample_gallery = parseGEmbedded(data.contents);
-        $(".gallery-title").text(sample_gallery['name']);
-        displayGallery(sample_gallery['content'],$(".isotope"));
-
-
-    });
-
-
-    /*
-        var xhr = $.ajax({
-          url: "google_drive_mobile_copy.html",
-          method: "GET",
-          type: "GET",
-          dataType: "html"
-            }).success(
-            function (data) { 
-              var sample_gallery = parseGDrive(data);
-              $(".gallery-title").text(sample_gallery['name']);
-              displayGallery(sample_gallery['content'],$(".isotope"));
-          }
-          ).error (
-          function (xhr) { 
-            console.log(xhr);
-          }
-          ); */
-
-
+    maybeLoad();
 
     </script>
     <!-- coded by Himic, edited by Hanna -->
