@@ -196,14 +196,19 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
     <script src="js/script.js"></script>
     <script>
 
+    function process_name(name) {
+      return name.split('.')[0];
+    }
+
     function displayGallery(data,target_layer) {
       var item = target_layer.find(".isotope-item");
     	item = item.eq(item.length-1);
     	for (var i=0; i<data.length; i++) {
-	    	item.find(".thumb-ruby__text").text(data[i]["name"]);
+        var cropped_name = process_name(data[i]['name']);
+	    	item.find(".thumb-ruby__text").text(cropped_name);
             item.find(".thumb-ruby__image").attr("src",'https://drive.google.com/thumbnail?authuser=0&sz=w400&id='+data[i]['id']);
             item.find(".thumb-ruby").attr("href",'https://drive.google.com/u/0/uc?id='+data[i]['id']+'&export=download');
-            item.find(".thumb-ruby").attr("data-sub-html",data[i]["name"]);
+            item.find(".thumb-ruby").attr("data-sub-html",cropped_name);
 	    	target_layer.find(".row").append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 isotope-item">'+item.html()+"</div>");
 	    }
 	    item.remove();
