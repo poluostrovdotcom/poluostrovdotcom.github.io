@@ -29,6 +29,7 @@
     self_loaded: false,
     follow: function () {},
     id: "",
+    parent: null,
     self: {},
     children: {},
     fetchList: function() {
@@ -38,8 +39,9 @@
       .catch(function (err) { console.log(err);} );
     },
     setList: function(data) {
-      this.children = data;
+      this.children = data.files;
       this.children_loaded = true;
+      this.follow(this);
       //this.maybeExecute();
     },
     fetchInfo: function() {
@@ -51,15 +53,26 @@
     setInfo(data) {
       this.self = data;
       this.self_loaded = true;
-      //this.maybeExecute();
     },
-    maybeExecute() {
-      if (this.children_loaded && this.self_loaded) this.follow(this);
-    },
-    init(id,onBothLoad) {
+    init(id,parent=null,follow=null) {
+      this.self_loaded = false;
+      this.children_loaded = false;
       this.id = id;
-      this.follow = onBothLoad;
-      this.fetchInfo();
+      if (parent) {
+        this.parent = parent;
+        this.self_loaded = true;
+        this.follow = follow;
+        for (var i=0; i<parent.children.length; i++) 
+          if (parent.children[i]["id"]==id)
+          {
+            this.self = parent.children[i];
+            break;
+          }
+      }
+      else {
+        this.parent = null;
+        this.fetchInfo();
+      }
       this.fetchList();
     }
 }
@@ -143,37 +156,55 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
         <div class="shell">
           <h1 class="breadcrumbs-custom__title">Фото и Видео</h1>
           <ul class="breadcrumbs-custom__path">
-            <li><a href="gallery_draft.html">Начало</a></li>
-            <li class="active gallery-title">Идет загрузка</li>
+            <li class="gallery-title folder-load"><a href="#">Идет загрузка</a></li>
+            <li class="gallery-title hide" id="title-blank"><a href="#"></a></li>
           </ul>
         </div>
       </section>
 
 
       <!-- Portfolio-->
-      <section class="section section-md bg-gray-darker text-center loading" style="padding-top: 0; min-height: 200px;">
+      <section class="section section-md bg-gray-darker text-center loading" style="padding-top: 0; min-height: 330px;">
         <div class="shell-fluid">
-          <div class="isotope thumb-ruby-wrap wow fadeIn hide" data-isotope-layout="masonry" data-isotope-group="gallery" data-lightgallery="group-isotope">
-            <div class="row">
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 isotope-item">
-                <a class="thumb-ruby thumb-mixed_height-2 thumb-mixed_md" href="" data-lightgallery="item" data-sub-html="">
-                    <img class="thumb-ruby__image" src="" alt=""/>
+          <div class="isotope thumb-ruby-wrap wow fadeIn" data-isotope-layout="masonry" data-isotope-group="gallery">
+            <div class="data-wrap hide" id="wrap-blank">
+            <div class="row row-folders bg-yellow-faded outline-yellow text-center hide">
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 isotope-item" id="blank-folder">
+                <a class="thumb-ruby thumb-mixed_height-2 thumb-mixed_md folder-load" href="#">
+                    <img class="thumb-ruby__image folder-icon" src="images/icon-white-folder.png" alt=""/>
                     <div class="thumb-ruby__caption"> 
-                        <p class="thumb-ruby__title heading-3">Фото #</p>
+                        <p class="thumb-ruby__title heading-3">Папка #</p>
                         <p class="thumb-ruby__text"></p>
                     </div>
                 </a>
               </div>
             </div>
+            <div class="row row-photos">
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 isotope-item" id="blank-photo">
+                <a class="thumb-ruby thumb-mixed_height-2 thumb-mixed_md" href="" data-lightgallery="item" data-sub-html="">
+                    <img class="thumb-ruby__image" src="" alt=""/>
+                    <div class="thumb-ruby__caption"> 
+                        <p class="thumb-ruby__title heading-3">Фото #</p>
+                        <p class="thumb-ruby__text"></p>
+                        <p class="video-icon hide"><img src="dukhovny-award/images/icon-play.png"></p>
+                        <div class="video-player" style="display:none;">
+                          <iframe src="" width="640" height="480" allow="autoplay" class="lg-video-object lg-html5"></iframe>
+                        </div>
+                    </div>
+                </a>
+              </div>
+            </div>
+            </div>
+
           </div>
         </div>
       </section>
 
       <!-- Page Footer-->
-      <footer class="footer-centered section bg-gray-darker">
+      <footer class="footer-centered section bg-gray-darker" style="clear: both;">
         <div class="shell">
           <div class="range range-sm-center">
-            <div class="cell-sm-10 cell-md-8 cell-lg-6 mt-4">
+            <div class="cell-sm-10 cell-md-8 cell-lg-6 mt-5">
               <!-- Brand--><a class="brand" href="index.html">
                 <div class="brand__name" style="overflow: unset; height: auto;"><img src="dukhovny-award/images/logo-inverse.png" alt="" style="height:200px;"/>
                 </div>
@@ -196,45 +227,140 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
     <script src="js/script.js"></script>
     <script>
 
+    var current_iframe;
+      
+  const listener = window.addEventListener('blur', () => {
+    current_iframe = document.activeElement.src;
+    $(".lg-next").on("click", function() {
+      $("iframe[src='"+current_iframe+"']").attr("src",current_iframe);
+      current_iframe = null;
+    });
+    $(".lg-prev").on("click", function() {
+      $("iframe[src='"+current_iframe+"']").attr("src",current_iframe);
+      current_iframe = null;
+    });
+});
+
+
+
     function process_name(name) {
-      return name.split('.')[0];
+      var end = (name.lastIndexOf(".")==-1) ? name.length : name.lastIndexOf(".");
+      return name.substr(0,end);
     }
 
-    function displayGallery(data,target_layer) {
-      var item = target_layer.find(".isotope-item");
-    	item = item.eq(item.length-1);
-    	for (var i=0; i<data.length; i++) {
-        var cropped_name = process_name(data[i]['name']);
-	    	item.find(".thumb-ruby__text").text(cropped_name);
-            item.find(".thumb-ruby__image").attr("src",'https://drive.google.com/thumbnail?authuser=0&sz=w400&id='+data[i]['id']);
-            item.find(".thumb-ruby").attr("href",'https://drive.google.com/u/0/uc?id='+data[i]['id']+'&export=download');
-            item.find(".thumb-ruby").attr("data-sub-html",cropped_name);
-	    	target_layer.find(".row").append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 isotope-item">'+item.html()+"</div>");
-	    }
-	    item.remove();
+    function displayGallery(obj,target_layer) {
+      var data = obj.children;
+      var folder;
+      var item;
+      var subfolders = [];
+      var children_list = "";
+    	for (var i=0; i<data.length; i++) 
+        if (data[i]["mimeType"]!="application/vnd.google-apps.folder")
+          {
+            item = target_layer.find("#blank-photo").eq(0);
+            if (data[i]["mimeType"]=="video/mp4") {
+              item.find(".video-icon").removeClass('hide');
+              item.find(".video-player").attr("id","video-"+data[i]['id']);
+              item.find(".thumb-ruby__title").text("Видео #");
+              item.find("iframe").attr("src",'https://drive.google.com/file/d/'+data[i]['id']+'/preview');
+              item.find(".thumb-ruby").attr("data-html","#video-"+data[i]['id']);
+              item.find(".thumb-ruby").attr("href","");
+            }
+            else { 
+              item.find(".thumb-ruby").attr("data-html","");
+              item.find(".thumb-ruby").attr("href",'https://drive.google.com/uc?id='+data[i]['id']);
+              item.find(".thumb-ruby").attr("data-poster","");
+              item.find(".thumb-ruby__title").text("Фото #");
+              item.find(".video-icon").addClass('hide');
+            }
+              var cropped_name = process_name(data[i]['name']);
+              item.find(".thumb-ruby__text").text(cropped_name);
+              item.find(".thumb-ruby__image").attr("src",'https://drive.google.com/thumbnail?authuser=0&sz=w400&id='+data[i]['id']);
+              
+              item.find(".thumb-ruby").attr("data-sub-html",cropped_name);
+          target_layer.find(".row-photos").append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 isotope-item">'+item.html()+"</div>");
+	        }
+        else {
+          folder = target_layer.find("#blank-folder").eq(0);
+          children_list += data[i]['id'] + " ";
+          subfolders.push(Object.create(obj));
+          subfolders[subfolders.length-1].init(data[i]['id'],obj,newGallery);
 
-        var itemsToInit = $( '[data-lightgallery="group-isotope"]' );
+          var cropped_name = process_name(data[i]['name']);
+          folder.find(".thumb-ruby__text").text(cropped_name);
+          folder.find("a").attr("data-id",data[i]['id']);
+          target_layer.find(".row-folders").append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 isotope-item mb-2">'+folder.html()+"</div>");
+          
+          //new folder creation
+        }
+	    if (item) item.remove();
+      if (folder) folder.remove();
+      if (subfolders.length) { 
+        target_layer.find(".row-folders").removeClass('hide');
+        $(".folder-load[data-id='"+obj.id+"']").each(function () { $(this).attr("data-children",children_list);}); 
+      }
+
+      $(".folder-load").each( function(index) { 
+         $(this).on("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var children_list = [];
+            if ($(this).attr("data-children")) children_list = $(this).attr("data-children").split(" ");
+            for (var i=0; i<children_list.length-1;i++)
+              $(".gallery-title[data-id="+children_list[i]+"]").removeClass("current").addClass("hide");
+
+            $(".data-wrap").addClass("hide");
+            $("#wrap-"+$(this).attr("data-id")).removeClass("hide");
+            $(".gallery-title[data-id='"+$(this).attr("data-id")+"']").addClass("current").removeClass("hide");
+
+            current_folder = $(this).attr("data-id");
+
+            $(".gallery-title[data-id!="+$(this).attr("data-id")+"]").removeClass("current").removeClass("active");
+            if (!obj.parent) $(".gallery-title").eq(0).addClass("active");
+          });});
+
+        var itemsToInit = $( '[data-lightgallery="group-'+obj.id+'"]' );
         $( itemsToInit ).lightGallery( {
 					thumbnail: $( itemsToInit ).attr( "data-lg-thumbnail" ) !== "false",
 					selector: "[data-lightgallery='item']",
 					autoplay: $( itemsToInit ).attr( "data-lg-autoplay" ) === "true",
 					pause: parseInt( $( itemsToInit ).attr( "data-lg-autoplay-delay" ) ) || 5000,
 					mode: $( itemsToInit ).attr( "data-lg-animation" ) || "lg-slide",
-					loop: $( itemsToInit ).attr( "data-lg-loop" ) !== "false"
+					loop: $( itemsToInit ).attr( "data-lg-loop" ) !== "false",
+          videojs: true
 				} );
 
 	    target_layer.closest('.bg-gray-darker').removeClass('loading');
-	    target_layer.removeClass('hide');
+    }
+
+    function newGallery(obj) {
+      $("#wrap-blank").closest(".isotope").append('<div class="data-wrap hide" id="wrap-'+obj.id+'" data-lightgallery="group-'+obj.id+'">'+$("#wrap-blank").html()+"</div>");
+      $("#title-blank").closest("ul").append('<li class="gallery-title hide" data-id="'+obj.id+'">'+$("#title-blank").html()+"</li>");
+      $(".gallery-title").eq($(".gallery-title").length-1).find("a").text(obj.self.name);
+      $(".gallery-title").eq($(".gallery-title").length-1).addClass("current");
+      if ($(".gallery-title[data-id='"+obj.id+"']").length>1) $(".gallery-title").eq($(".gallery-title").length-1).addClass("folder-load");
+      $(".gallery-title").eq($(".gallery-title").length-1).on("click",function(){
+        if(current_folder!=$(this).attr("data-id")) {
+            $(".folder-load[data-id='"+$(this).attr("data-id")+"']").eq(0).trigger("click");
+          }
+        });
+      displayGallery(obj,$("#wrap-"+obj.id));
+
+
     }
 
     function maybeLoad() {
       if (drive_preload.self_loaded&&drive_preload.children_loaded) {
-        $(".gallery-title").text(drive_preload.self.name);
-        displayGallery(drive_preload.children.files,$(".isotope"));
+        $(".gallery-title").eq(0).attr("data-id",drive_preload.id);
+        newGallery(drive_preload);
+        $(".gallery-title").eq(0).addClass("active");
+        $(".gallery-title").eq(0).find("a").text("Начало");
+        $("#wrap-"+drive_preload.id).removeClass('hide');
+        $(".gallery-title[data-id='"+drive_preload.id+"']").removeClass('hide');
       }
       else setTimeout( maybeLoad, 1000);
     }
-
+    var current_folder = drive_preload.id;
     maybeLoad();
 
     </script>
