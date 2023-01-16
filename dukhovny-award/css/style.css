@@ -297,12 +297,12 @@ p * {
 p a {
 	color: #f3ef84;
 }
-
+/*
 p [data-toggle='tooltip'] {
 	padding-left: .25em;
 	padding-right: .25em;
 	color: #b7b7b7;
-}
+}*/
 
 /*
 *
@@ -7251,29 +7251,31 @@ html:not(.tablet):not(.mobile) .thumb-alice:hover .thumb-alice__inner {
 	max-width: 253px;
 	padding: 10px 25px;
 	font-size: 14px;
-	border-radius: 0;
-	background: #f3ef84;
+	border-radius: 10px;
+	color: #101010;
+	background: linear-gradient(170deg, #f3ef84 0%, #d5bb59 60%) !important;
+	line-height: 1;
 }
 
 .tooltip.left .tooltip-arrow {
-	border-left-color: #f3ef84;
+	border-left-color: #d5bb59;
 	border-width: 7px 0 7px 7px;
 }
 
 .tooltip.right .tooltip-arrow {
-	border-right-color: #f3ef84;
+	border-right-color: #d5bb59;
 	border-width: 7px 7px 7px 0;
 }
 
 .tooltip.top .tooltip-arrow {
 	bottom: -2px;
-	border-top-color: #f3ef84;
+	border-top-color: #d5bb59;
 	border-width: 7px 7px 0;
 }
 
 .tooltip.bottom .tooltip-arrow {
 	top: -3px;
-	border-bottom-color: #f3ef84;
+	border-bottom-color: #d5bb59;
 	border-width: 0 7px 7px;
 }
 
