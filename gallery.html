@@ -243,7 +243,13 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
 
     function process_name(name) {
       var end = (name.lastIndexOf(".")==-1) ? name.length : name.lastIndexOf(".");
-      return name.substr(0,end);
+      name = name.substr(0,end);
+      var replacements = [ { "from" : "папа", "to" : "Леонид Духовный" }, { "from" : "папы", "to" : "Леонида Духовного" }, { "from" : "папе", "to" : "Леониду Духовному" },
+                           { "from" : "Папа", "to" : "Леонид Духовный" }, { "from" : "Папы", "to" : "Леонида Духовного" }, { "from" : "Папе", "to" : "Леониду Духовному" } ];
+      for (var i=0; i<replacements.length; i++)
+        name = name.replace(replacements[i]['from'], replacements[i]['to']);
+      return name;
+
     }
 
     function displayGallery(obj,target_layer) {
