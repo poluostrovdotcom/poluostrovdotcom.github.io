@@ -7,7 +7,7 @@ function createMenu(where)
         { url: 'index.html', title: 'Персоналии',class:''},
         // { url: 'investors.html', title: 'Investors',class:''},
         // { url: 'contact.html', title: 'Contact',class:''},
-        { url: 'index.html', title: 'Фотографии&nbsp;и&nbsp;видео',class:''},
+        { url: 'gallery.html', title: 'Фото&nbsp;и&nbsp;видео',class:''},
         { url: 'index.html', title: 'Купить билеты<br><small>на&nbsp;мероприятия</small>',class:Array('menu-button')}, 
         );
 
