@@ -460,7 +460,7 @@
   
       function readVotes() {
         var xhr = $.ajax({
-          url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTF24QmbqptePQikVDbY2P0HLtGkeUBaB4K9BRhXSNG1RqXqPqqe860kTQii2vcEuNJ2J1KlLOZSPcq/pub?output=csv",
+          url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTF24QmbqptePQikVDbY2P0HLtGkeUBaB4K9BRhXSNG1RqXqPqqe860kTQii2vcEuNJ2J1KlLOZSPcq/pub?output=csv&range=A1:B100000",
           dataType: "text"
           }).success(
             function (data) { 		
