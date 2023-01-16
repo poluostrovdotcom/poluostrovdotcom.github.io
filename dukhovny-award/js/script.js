@@ -1025,6 +1025,7 @@ function updateSheets(formdata,sheet) {
 	//web app url
 	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbwo40J-sZzmxsLaODCs9Yqj9cBJ9jYTYMR09ff3_Uuz7ZF2hwB7_8ELG778C32JFRAv/exec";
 	if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbwysfyDy_hnKbiBALhC37-ei_B7-LZnngHHVEJvAQJlUtceS-YzzCbss8QWKOay_Imz/exec";
+	if (sheet=='like') var g_url = "https://script.google.com/macros/s/AKfycbxYjxAxPKnV7GkhZLyE2xMQwT91YadVUUah1DPuqvOsZZ3A_rIwqREbpx9ojed48WwhbQ/exec";
 
 	/* just in case request won't be working anymore 
 	var iframe = document.createElement('iframe');
@@ -1052,12 +1053,18 @@ function updateSheets(formdata,sheet) {
 				$(".post-boxed__stars[rate-id='"+formdata['id']+"']").attr("class",("post-boxed__stars voted "+getRating(formdata['id'])));
 
 			}
+			if (sheet=="like") {
+				showMsg("Лайк отправлен!","success");
+				setCookie(formdata['id'],true,365);
+				likes_by_id[formdata['id']]++;
+			}
 
 		}
 	  ).error (
 		function (xhr) { 
 			if (sheet=="nomination") formClear(false,"Не удалось добавить данные",true,false); 
 			if (sheet=="rate") formClear("Перезагрузите страницу и попробуйте еще раз!",false); 
+			if (sheet=="like") showMsg("Перезагрузите страницу и попробуйте еще раз!","error");
 		}
 	  );
 

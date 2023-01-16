@@ -6776,6 +6776,27 @@ html:not(.tablet):not(.mobile).ie-10 .thumb-janez__content::after, html:not(.tab
 	margin-right: auto;
 }
 
+.thumb-ruby__likes {
+	opacity: 0;
+	font-weight: bold;
+	transition: opacity 0.4s, transform 0.4s;
+	margin-top: 10px;
+	padding: 0;
+}
+
+.thumb-ruby__likes::before {
+	font-family: 'FontAwesome';
+	content: "\f08a";
+	display: inline-block;
+	padding-right: 5px;
+}
+
+
+.thumb-ruby__likes.voted::before {
+	content: "\f004";
+}
+
+
 .thumb-ruby__title {
 	color: inherit;
 }
@@ -6963,7 +6984,7 @@ html:not(.tablet):not(.mobile) .thumb-ruby__image {
 	}
 }
 
-html:not(.tablet):not(.mobile) .thumb-ruby__text {
+html:not(.tablet):not(.mobile) .thumb-ruby__text, html:not(.tablet):not(.mobile) .thumb-ruby__likes {
 	opacity: 0;
 	transform: translate3d(0, 20px, 0) scale(1.1);
 }
@@ -6996,7 +7017,7 @@ html:not(.tablet):not(.mobile) .thumb-ruby:hover .thumb-ruby__title {
 	transform: translate3d(0, 0, 0);
 }
 
-html:not(.tablet):not(.mobile) .thumb-ruby:hover .thumb-ruby__text {
+html:not(.tablet):not(.mobile) .thumb-ruby:hover .thumb-ruby__text, html:not(.tablet):not(.mobile) .thumb-ruby:hover .thumb-ruby__likes {
 	opacity: 1;
 	transform: translate3d(0, 0, 0) scale(1);
 }
@@ -32942,3 +32963,41 @@ input[type=radio] { width: 30px; height: 30px; filter: hue-rotate(-175deg) grays
 .thumb-ruby:hover .thumb-ruby__image.folder-icon {
 		transform: translateY(-10px) scale(1);
 	}
+
+
+.like-button {
+	background: linear-gradient(170deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.4) 80%);
+	border: 0;
+    font-size: 15px;
+	text-transform: uppercase;
+    padding: 5px 15px 5px 15px;
+    border-radius: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+	margin-top: 10px;
+	opacity: 0.5;
+	transition: opacity 0.3s;
+}
+
+.like-button::before {
+	content: "\f08a";
+	font-family: 'FontAwesome';
+	padding-right: 5px;
+}
+
+.like-button:hover {
+	opacity: 1;
+}
+
+.like-button:hover::before {
+	content: "\f004";
+}
+
+.like-button.voted {
+	opacity: 1;
+}
+
+.like-button.voted::before {
+	content: "\f004";
+}

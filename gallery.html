@@ -15,14 +15,14 @@
     <meta property="og:type"               content="gallery" />
     <meta property="og:title"              content="Фото и Видео | Полуостров Им. Леонида Духовного" />
     <meta charset="utf-8">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="dukhovny-award/images/favicon.ico" type="image/x-icon">
     <!-- Stylesheets-->
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="dukhovny-award/css/style.css">
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
   </head>
   <script>
-
+  
   const drive_preload = {
     api_key: "AIzaSyCqC17-M7h5Bgr8BuEznkCrZ9RFFLyNWUI",
     children_loaded: false,
@@ -180,10 +180,13 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
             </div>
             <div class="row row-photos">
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 isotope-item" id="blank-photo">
-                <a class="thumb-ruby thumb-mixed_height-2 thumb-mixed_md" href="" data-lightgallery="item" data-sub-html="">
+                <a class="thumb-ruby thumb-mixed_height-2 thumb-mixed_md" href="" data-lightgallery="item">
                     <img class="thumb-ruby__image" src="" alt=""/>
                     <div class="thumb-ruby__caption"> 
+                      <span class="lg-caption">
                         <p class="thumb-ruby__text"></p>
+                        <p class="thumb-ruby__likes"></p>
+                      </span>
                         <p class="video-icon hide"><img src="dukhovny-award/images/icon-play.png"></p>
                         <div class="video-player" style="display:none;">
                           <iframe src="" width="640" height="480" allow="autoplay" class="lg-video-object lg-html5"></iframe>
@@ -222,21 +225,82 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
     <div class="snackbars" id="form-output-global"></div>
     <!-- Javascript-->
     <script src="js/core.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="dukhovny-award/js/script.js"></script>
     <script>
 
+    function showMsg(msg,status) {
+    	var output = $("#form-output-global");
+
+    	if(status=="success") {
+			var cls = "success", icon = "mdi mdi-check";
+		}
+		if (status=="error") {
+			var cls = "error", icon = "mdi mdi-alert-outline";
+		}
+    if (status=="process") {
+      var cls = "", icon = "fa fa-circle-o-notch fa-spin icon-xxs";
+    }
+
+			output.html('<p><span class="icon text-middle '+icon+' icon-xxs"></span><span>' + msg + '</span></p>');
+			output.addClass("active "+cls);
+
+		if (status!="process")
+      setTimeout(function () {
+			  output.removeClass("active");
+		  }, 3500);
+
+  }
+
+      var likes_by_id = {};
+      var likes_loaded = false;
+      readLikes();
+ 
+      function castLike(el,item_id) {
+        if (el.classList.contains('voted')||(getCookie(item_id)!="")) { el.classList.add("voted"); showMsg("Вы уже проголосовали","error"); }
+        else {
+          el.classList.add("voted");
+          el.innerText = parseInt(el.innerText)+1;
+          $(".thumb-ruby__likes[data-id='"+item_id+"']").eq(0).addClass("voted");
+          $(".thumb-ruby__likes[data-id='"+item_id+"']").eq(0).text(el.innerText);
+          showMsg("Голос отправляется...","process");
+          var formdata = { "id":item_id, 'ip_address' : user_ip, 'time' : fullDate(new Date()) };
+          updateSheets(formdata,'like');
+        }
+      }
+      
+      function readLikes() {
+        var xhr = $.ajax({
+          url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvVnlSSsLiQvtadidEnu_KD2jfrKUp540xbG2Y7VA6rFE0EyA9I4iWymCemUyuQcbtxb_RG9Gb25_R/pub?output=csv",
+          dataType: "text"
+          }).success(
+            function (data) { 	
+              var sheet_data = data.split(/\r?\n|\r/);
+              var keys = sheet_data[0].split(',');
+              for(var i = 1; i<sheet_data.length; i++)
+                {
+                var tmp = sheet_data[i].split(',');
+                if (tmp[0] in likes_by_id) likes_by_id[tmp[0]]++;
+                else likes_by_id[tmp[0]] = 1;
+                };
+
+                likes_loaded = true;
+
+               }
+            ).error (
+            function (xhr) { return false; }
+            );
+        }
+
     var current_iframe;
+    function reload_current_iframe() {
+      $("iframe[src='"+current_iframe+"']").attr("src",current_iframe);
+      current_iframe = null;
+    }
       
   const listener = window.addEventListener('blur', () => {
     current_iframe = document.activeElement.src;
-    $(".lg-next").on("click", function() {
-      $("iframe[src='"+current_iframe+"']").attr("src",current_iframe);
-      current_iframe = null;
-    });
-    $(".lg-prev").on("click", function() {
-      $("iframe[src='"+current_iframe+"']").attr("src",current_iframe);
-      current_iframe = null;
-    });
+    $(".lg-next").on("click", reload_current_iframe);
+    $(".lg-prev").on("click", reload_current_iframe);
 });
 
 
@@ -258,6 +322,8 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
       var item;
       var subfolders = [];
       var children_list = "";
+      var like_button = "";
+      //var like_button = $("#like-button").html();
     	for (var i=0; i<data.length; i++) 
         if (data[i]["mimeType"]!="application/vnd.google-apps.folder")
           {
@@ -271,17 +337,27 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
               item.find(".thumb-ruby").attr("href","");
             }
             else { 
-              item.find(".thumb-ruby").attr("data-html","");
+              item.find(".thumb-ruby").removeAttr("data-html");
+              item.find(".thumb-ruby").removeAttr("data-poster");
               item.find(".thumb-ruby").attr("href",'https://drive.google.com/uc?id='+data[i]['id']);
-              item.find(".thumb-ruby").attr("data-poster","");
               //item.find(".thumb-ruby__title").text("Фото #");
               item.find(".video-icon").addClass('hide');
             }
+              var voted = (getCookie(data[i]['id'])!="") ? " voted" : "";
+              var num = (likes_by_id[data[i]['id']]) ? likes_by_id[data[i]['id']] : "0";
+              like_button = '<button class="like-button'+voted+'" onLoad="alert(1);" onClick="castLike(this,'+"'"+data[i]['id']+"'"+')">'+num+'</button>';
+
+              item.find(".thumb-ruby__likes").text(num);
+              item.find(".thumb-ruby__likes").attr("data-id",data[i]['id']);
+
+              if (voted!="") item.find(".thumb-ruby__likes").addClass(voted);
+              else item.find(".thumb-ruby__likes").removeClass("voted");
+
               var cropped_name = process_name(data[i]['name']);
               item.find(".thumb-ruby__text").text(cropped_name);
               item.find(".thumb-ruby__image").attr("src",'https://drive.google.com/thumbnail?authuser=0&sz=w400&id='+data[i]['id']);
               
-              item.find(".thumb-ruby").attr("data-sub-html",cropped_name);
+              item.find(".thumb-ruby").attr("data-sub-html",(cropped_name+like_button));
           target_layer.find(".row-photos").append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 isotope-item">'+item.html()+"</div>");
 	        }
         else {
@@ -294,8 +370,6 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
           folder.find(".thumb-ruby__text").text(cropped_name);
           folder.find("a").attr("data-id",data[i]['id']);
           target_layer.find(".row-folders").append('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 isotope-item mb-2">'+folder.html()+"</div>");
-          
-          //new folder creation
         }
 	    if (item) item.remove();
       if (folder) folder.remove();
@@ -349,12 +423,10 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
           }
         });
       displayGallery(obj,$("#wrap-"+obj.id));
-
-
     }
 
     function maybeLoad() {
-      if (drive_preload.self_loaded&&drive_preload.children_loaded) {
+      if (drive_preload.self_loaded&&drive_preload.children_loaded&&likes_loaded) {
         $(".gallery-title").eq(0).attr("data-id",drive_preload.id);
         newGallery(drive_preload);
         $(".gallery-title").eq(0).addClass("active");
@@ -368,6 +440,6 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
     maybeLoad();
 
     </script>
-    <!-- coded by Himic, edited by Hanna -->
+    <!-- coded by Himic, edited and coded by Hanna -->
   </body>
 </html>
