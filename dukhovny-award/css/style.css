@@ -6921,8 +6921,13 @@ html:not(.tablet):not(.mobile).ie-10 .thumb-janez__content::after, html:not(.tab
 	font-size: 25px;
 }
 
-.row-folders .thumb-ruby__text, .row-photos .thumb-ruby__text {
-	font-size: 20px;
+.row-folders .thumb-ruby__text {
+	font-size: 17px;
+	text-transform: uppercase;
+}
+
+.row-photos .thumb-ruby__text {
+	font-size: 17px;
 }
 
 html:not(.tablet):not(.mobile) .thumb-ruby__caption::before {
