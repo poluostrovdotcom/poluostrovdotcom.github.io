@@ -173,7 +173,6 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
                 <a class="thumb-ruby thumb-mixed_height-2 thumb-mixed_md folder-load" href="#">
                     <img class="thumb-ruby__image folder-icon" src="images/icon-white-folder.png" alt=""/>
                     <div class="thumb-ruby__caption"> 
-                        <p class="thumb-ruby__title heading-3">Папка #</p>
                         <p class="thumb-ruby__text"></p>
                     </div>
                 </a>
@@ -184,7 +183,6 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
                 <a class="thumb-ruby thumb-mixed_height-2 thumb-mixed_md" href="" data-lightgallery="item" data-sub-html="">
                     <img class="thumb-ruby__image" src="" alt=""/>
                     <div class="thumb-ruby__caption"> 
-                        <p class="thumb-ruby__title heading-3">Фото #</p>
                         <p class="thumb-ruby__text"></p>
                         <p class="video-icon hide"><img src="dukhovny-award/images/icon-play.png"></p>
                         <div class="video-player" style="display:none;">
@@ -261,7 +259,7 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
             if (data[i]["mimeType"]=="video/mp4") {
               item.find(".video-icon").removeClass('hide');
               item.find(".video-player").attr("id","video-"+data[i]['id']);
-              item.find(".thumb-ruby__title").text("Видео #");
+              //item.find(".thumb-ruby__title").text("Видео #");
               item.find("iframe").attr("src",'https://drive.google.com/file/d/'+data[i]['id']+'/preview');
               item.find(".thumb-ruby").attr("data-html","#video-"+data[i]['id']);
               item.find(".thumb-ruby").attr("href","");
@@ -270,7 +268,7 @@ drive_preload.init("1jEQDNpok5Xfj2xLEq0XjXlEXT3ATw9K7");
               item.find(".thumb-ruby").attr("data-html","");
               item.find(".thumb-ruby").attr("href",'https://drive.google.com/uc?id='+data[i]['id']);
               item.find(".thumb-ruby").attr("data-poster","");
-              item.find(".thumb-ruby__title").text("Фото #");
+              //item.find(".thumb-ruby__title").text("Фото #");
               item.find(".video-icon").addClass('hide');
             }
               var cropped_name = process_name(data[i]['name']);
