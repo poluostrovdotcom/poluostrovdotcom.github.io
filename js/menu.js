@@ -3,6 +3,7 @@ var curPage = "";
 function createMenu(where)
 {
     menu = Array( 
+        { url: '/dukhovny-award/index.html', title: 'Премия Имени Леонида Духовного',class:''},
         { url: 'index.html', title: 'История Клуба',class:''},
         { url: 'index.html', title: 'Персоналии',class:''},
         // { url: 'investors.html', title: 'Investors',class:''},
