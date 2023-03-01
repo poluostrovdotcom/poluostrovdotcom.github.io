@@ -1240,6 +1240,12 @@ function processNominations(data,target_table) {
 
 				}
 			});
+			$(this).hover(function() {
+				$(this).closest(".post-boxed__stars").addClass("stars-"+(index+1));
+			},
+			function () {
+				$(this).closest(".post-boxed__stars").removeClass("stars-"+(index+1));
+			});
 		});
 	} );
 

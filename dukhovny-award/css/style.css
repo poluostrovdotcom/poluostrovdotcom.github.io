@@ -4656,7 +4656,7 @@ html .icon-md {
 	position: relative;
 }
 
-.post-boxed__stars span::before { content: "★"; background: inherit;}
+.post-boxed__stars span::before { content: "★";}
 
 /*
 .post-boxed__stars span {display: inline-block; position: absolute; left: 0;background: inherit;}
@@ -4681,11 +4681,11 @@ html .icon-md {
 .post-boxed__stars span:nth-child(5):hover::before {
 	content: "★★★★★";
 }*/
-
+/*
 .post-boxed__stars span:hover {
 	left: 0px;
 	-webkit-text-fill-color: orange !important;
-}
+}*/
 
 @media (max-width: 992px) { .post-boxed__stars {font-size: 25px; } }
 
