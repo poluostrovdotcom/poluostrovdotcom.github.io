@@ -32875,24 +32875,24 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 }
 
 
-.post-boxed__stars.stars-1, .post-boxed__stars.stars-10 {
+.post-boxed__stars.stars-10 {
 	background: linear-gradient(to right, orange 0%, orange 20%, gray 20%);
 	
 }
 
-.post-boxed__stars.stars-2, .post-boxed__stars.stars-20 {
+.post-boxed__stars.stars-20 {
 	background: linear-gradient(to right, orange 0%, orange 40%, gray 40%);
 }
 
-.post-boxed__stars.stars-3, .post-boxed__stars.stars-30 {
+.post-boxed__stars.stars-30 {
 	background: linear-gradient(to right, orange 0%, orange 60%, gray 60%);
 }
 
-.post-boxed__stars.stars-4, .post-boxed__stars.stars-40 {
+.post-boxed__stars.stars-40 {
 	background: linear-gradient(to right, orange 0%, orange 80%, gray 80%);
 }
 
-.post-boxed__stars.stars-5, .post-boxed__stars.stars-50 {
+.post-boxed__stars.stars-50 {
 	background: linear-gradient(to right, orange 0%, orange 100%, gray 100%);
 }
 
@@ -32901,8 +32901,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 }
 
 .post-boxed__stars.stars-15 {
-	background: linear-gradient(to right, orange 0%, orange 30%, gray 30%);
-	
+	background: linear-gradient(to right, orange 0%, orange 30%, gray 30%);	
 }
 
 .post-boxed__stars.stars-25 {
@@ -32915,6 +32914,36 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 
 .post-boxed__stars.stars-45 {
 	background: linear-gradient(to right, orange 0%, orange 90%, gray 90%);
+}
+
+.post-boxed__stars.stars-1 {
+	background: linear-gradient(to right, orange 0%, orange 20%, gray 20%) !important;
+	-webkit-text-fill-color: transparent !important;
+    -webkit-background-clip: text !important;
+}
+
+.post-boxed__stars.stars-2 {
+	background: linear-gradient(to right, orange 0%, orange 40%, gray 40%) !important;
+	-webkit-text-fill-color: transparent !important;
+    -webkit-background-clip: text !important;
+}
+
+.post-boxed__stars.stars-3 {
+	background: linear-gradient(to right, orange 0%, orange 60%, gray 60%) !important;
+	-webkit-text-fill-color: transparent !important;
+    -webkit-background-clip: text !important;
+}
+
+.post-boxed__stars.stars-4 {
+	background: linear-gradient(to right, orange 0%, orange 80%, gray 80%) !important;
+	-webkit-text-fill-color: transparent !important;
+    -webkit-background-clip: text !important;
+}
+
+.post-boxed__stars.stars-5 {
+	background: linear-gradient(to right, orange 0%, orange 100%, gray 100%) !important;
+	-webkit-text-fill-color: transparent !important;
+    -webkit-background-clip: text !important;
 }
 
 .range-compact [class*="cell-"] { padding: 0; background: white; box-shadow: 0 0 7px 0 rgb(0 0 0 / 19%);}
