@@ -1183,7 +1183,8 @@ function processNominations(data,target_table) {
 	var row = target_table.find("tr");
 	row = row.eq(row.length-1);
 	var n = row.length-1;
-	for (var i=0; i<data.length; i++) {
+	//for (var i=0; i<data.length; i++) {
+	for (var i=data.length-1; i>=0; i--) {
 		row.find(".cell-name").eq(0).text(data[i]["name"]);
 		var author = (data[i]["music"]==data[i]["lyrics"]) ? data[i]["music"] : data[i]["music"] + "&nbsp;/ " + data[i]["lyrics"];
  		row.find(".cell-author").eq(0).html(author);
