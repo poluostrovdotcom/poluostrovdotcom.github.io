@@ -1111,14 +1111,15 @@ function readSheets(sheet_url, success_function, target_table) {
 		dataType: "text"
 	  }).success(
 		  function (data) { 		
+			console.log(data);
 			var sheet_data = data.split(/\r?\n|\r/);
-			var keys = sheet_data[0].split(',');
+			var keys = sheet_data[0].split('\t');
 			var show_id = -1;
 			for (var i=0; i<keys.length; i++) if (keys[i]=='show') { show_id = i; break; }
 			var new_data = [];
 			for(var i = 1; i<sheet_data.length; i++)
     		{
-				var tmp = sheet_data[i].split(',');
+				var tmp = sheet_data[i].split('\t');
 				if (tmp[show_id]=="1")
 				{
 					sheet_data[i] = {};
