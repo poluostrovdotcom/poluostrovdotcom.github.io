@@ -1110,8 +1110,7 @@ function readSheets(sheet_url, success_function, target_table) {
 		url: sheet_url,
 		dataType: "text"
 	  }).success(
-		  function (data) { 		
-			console.log(data);
+		  function (data) { 	
 			var sheet_data = data.split(/\r?\n|\r/);
 			var keys = sheet_data[0].split('\t');
 			var show_id = -1;
