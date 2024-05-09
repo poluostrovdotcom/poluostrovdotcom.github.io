@@ -863,7 +863,7 @@ const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 
 							var formdata = collectData();
 							formdata["id"] = Date.now()+genRanHex(6);
 							formdata["time"] = fullDate(new Date());
-							formdata["show"] = 1;
+							formdata["show"] = 0;
 							formdata["name"] = formdata["name"].replace(/"/g,"");
 							updateSheets(formdata,"nomination");
 
@@ -1025,18 +1025,11 @@ function collectData()
 
 function updateSheets(formdata,sheet) {
 	//web app url
-	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbwo40J-sZzmxsLaODCs9Yqj9cBJ9jYTYMR09ff3_Uuz7ZF2hwB7_8ELG778C32JFRAv/exec";
-	if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbwysfyDy_hnKbiBALhC37-ei_B7-LZnngHHVEJvAQJlUtceS-YzzCbss8QWKOay_Imz/exec";
+	// 2023	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbwo40J-sZzmxsLaODCs9Yqj9cBJ9jYTYMR09ff3_Uuz7ZF2hwB7_8ELG778C32JFRAv/exec";
+	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbxTugs3xAvidEK9SW66jRptMKgPNl5_rgu3xqKbSLcaGUDJvtLOrMX58sNpa-kOrHg-/exec";
+	// 2023 if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbwysfyDy_hnKbiBALhC37-ei_B7-LZnngHHVEJvAQJlUtceS-YzzCbss8QWKOay_Imz/exec";
+	if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbzw13vwbabNOpIgYTkwf7D8zElyHlHz4TghyEuTYetUCQJijEy6ajfTWX7N1oNIVl6P/exec"
 	if (sheet=='like') var g_url = "https://script.google.com/macros/s/AKfycbxYjxAxPKnV7GkhZLyE2xMQwT91YadVUUah1DPuqvOsZZ3A_rIwqREbpx9ojed48WwhbQ/exec";
-
-	/* just in case request won't be working anymore 
-	var iframe = document.createElement('iframe');
-	iframe.onload = function() { formClear(true,true,"Order sent!"); }; //there's no access to what the message is so we assume it's successful
-	iframe.style = "visibility: hidden; position: absolute; top: 0; left: 0; width: 1px; height: 1px;";
-	iframe.src = g_url + dataurl; 
-	document.body.appendChild(iframe);
-	// iframe displays 403 but spreadsheet is nevertheless updated
-	*/
 
 	var xhr = $.ajax({
 		url: g_url,
