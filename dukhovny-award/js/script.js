@@ -1256,4 +1256,6 @@ var user_ip = "";
 
 $.getJSON("https://api.ipify.org?format=json", function(data) {	user_ip = data.ip;});
 
-
+$('.rd-navbar-nav .inline').click(function() {
+	$('.rd-navbar-toggle').trigger('click');
+  });

@@ -15164,6 +15164,10 @@ html.lt-ie-10 .range > .cell-lg-12 {
 	line-height: 1.5;
 }
 
+.rd-navbar-fixed .rd-navbar-dropdown > li > a:hover {
+	background: #d5bb59 !important;
+}
+
 .rd-navbar-fixed .rd-megamenu-list > li + li,
 .rd-navbar-fixed .rd-navbar-dropdown > li + li {
 	margin-top: 3px;
@@ -15425,7 +15429,7 @@ html .page .rd-navbar-fixed .rd-navbar-fixed--hidden {
 
 .rd-navbar-fixed .rd-megamenu-list > li > a,
 .rd-navbar-fixed .rd-navbar-dropdown > li > a {
-	color: #151515;
+	color: #f0f0f0;
 }
 
 .rd-navbar-fixed .rd-megamenu-list > li:hover > a,
@@ -33136,4 +33140,11 @@ input[type=radio] { width: 30px; height: 30px; filter: hue-rotate(-175deg) grays
 
 .winner-name:hover::before {
 	filter: invert(1);
+}
+
+@media(max-width:476px) {
+	.box-line {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
 }
