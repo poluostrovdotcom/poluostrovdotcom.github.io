@@ -16505,6 +16505,13 @@ html[class*="ie"] .dtp-hand, html[class*="ie"] .dtp-hour-hand {
 	}
 }
 
+@media(max-width:600px) {
+	.parallax-container.h-95 .material-parallax img {
+		max-width: 200%;
+	}
+}
+
+
 
 
 @media(max-width:600px) {
