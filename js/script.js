@@ -1,7 +1,9 @@
 /**
  * Global variables
  */
-var salt = String.fromCharCode(97, 101, 114, 111);
+
+const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+
 "use strict";
 (function () {
 	var isNoviBuilder = window.xMode;
@@ -261,28 +263,6 @@ var salt = String.fromCharCode(97, 101, 114, 111);
 				}
 			});
 
-			// Custom validator - file type pdf doc
-			regula.custom({
-				name: 'Resume',
-				defaultMessage: 'Unacceptable file type (PDF,DOC,DOCX,ODT,RTF,TXT required)',
-				validator: function() {
-					this.style.color = (this.value=='') ? "rgba(0,0,0,0)" : "#293c98";
-					if ( this.value === '' ) return true;
-					else return /(\.pdf|\.doc|\.docx|\.txt|\.odt|\.rtf)$$/i.test( this.value );
-				}
-			});
-
-			// Custom validator - selected radio
-			regula.custom({
-				name: 'Select',
-				defaultMessage: 'You need to live in that area',
-				validator: function() {
-				return this.checked;
-				}
-			});
-
-			
-
 			for (var i = 0; i < elements.length; i++) {
 				var o = $(elements[i]), v;
 				o.addClass("form-control-has-validation").after("<span class='form-validation'></span>");
@@ -308,7 +288,7 @@ var salt = String.fromCharCode(97, 101, 114, 111);
 			var regularConstraintsMessages = [
 				{
 					type: regula.Constraint.Required,
-					newMessage: "This field is required."
+					newMessage: "The text field is required."
 				},
 				{
 					type: regula.Constraint.Email,
@@ -473,7 +453,7 @@ var salt = String.fromCharCode(97, 101, 114, 111);
 			setTimeout( function () {
 				plugins.pageLoader.addClass( "loaded" );
 				$window.trigger( "resize" );
-			}, 50 );
+			}, 100 );
 		}
 
 		/**
@@ -529,6 +509,7 @@ var salt = String.fromCharCode(97, 101, 114, 111);
 		if ( isDesktop && !isNoviBuilder ) {
 			$().UItoTop( {
 				easingType:     'easeOutQuart',
+				scrollSpeed: 0, //remove if css smooth-scroll is not enabled
 				containerClass: 'ui-to-top fa fa-angle-up'
 			} );
 		}
@@ -875,18 +856,22 @@ var salt = String.fromCharCode(97, 101, 114, 111);
 							form.addClass('form-in-process');
 
 							if (output.hasClass("snackbars")) {
-								output.html('<p><span class="icon text-middle fa fa-circle-o-notch fa-spin icon-xxs"></span><span>Sending</span></p>');
+								output.html('<p><span class="icon text-middle fa fa-circle-o-notch fa-spin icon-xxs"></span><span>Отправляем</span></p>');
 								output.addClass("active");
 							}
 
-							sendMail();
+							var formdata = collectData();
+							formdata["id"] = Date.now()+genRanHex(6);
+							formdata["time"] = fullDate(new Date());
+							formdata["show"] = 0;
+							formdata["name"] = formdata["name"].replace(/"/g,"");
+							updateSheets(formdata,"nomination");
 
 						} else {
 							return false;
 						}
 					},
-					error: function (result) {
-						return; // is now handled by sendMail function
+					error: function (result) { /* there's no actual form submit because it's JS only
 						if (isNoviBuilder)
 							return;
 
@@ -898,11 +883,9 @@ var salt = String.fromCharCode(97, 101, 114, 111);
 
 						if (formHasCaptcha) {
 							grecaptcha.reset();
-						}
+						} */
 					},
-					success: function (result) {
-						return; // is now handled by sendMail function
-
+					success: function (result) { /* there's no actual form submit because there's JS only 
 						if (isNoviBuilder)
 							return;
 
@@ -946,7 +929,7 @@ var salt = String.fromCharCode(97, 101, 114, 111);
 						setTimeout(function () {
 							output.removeClass("active error success");
 							form.removeClass('success');
-						}, 3500);
+						}, 3500); */
 					}
 				});
 			}
@@ -1023,180 +1006,82 @@ var salt = String.fromCharCode(97, 101, 114, 111);
 	} );
 }());
 
-
-$('.careers-position-title').each(function() {
-	var option = document.createElement("option");
-	option.text = $(this).text();
-	option.value = $(this).text();
-	document.getElementById('contact-position').add(option);
-});
-
-$('.careers-positions-list').on('click',function() { 
-	var x = document.getElementById('contact-position');
-	x.selectedIndex = $(this).index()+1;
-	x.scrollIntoView();
-	return false;
-});
-
-var display = parseInt($(".post-item").length-$(".hide").length); 
-var step = parseInt($("#news-items").attr('data-step'));
-
-$("#load-more").on('click',function(){
-	$(".post-item").each(function(index) {
-		if (index<display+step)
-		{
-			if (index>=display) 
-			{
-				$(this).attr("data-wow-delay",(0.15*(index-display))+"s");
-				$(this).removeClass('hide');
-			}
-		} 
-
-		window.scroll(0,window.scrollY+1); //scrolling is necessary to trigger animation start
-		if ((display+step)>=$(".post-item").length) $("#load-more").addClass('hide');
-	});
-	display += step;
-});
-
-function smartBack(e) {
-	if ((document.referrer==e.target) && (history.length>1)) {
-		e.preventDefault();
-		e.stopPropagation();
-		history.back();
-	  }
-
+function alert_message(msg) {
+	var output = $("#" + $(".rd-mailform").attr("data-form-output"));
+	if (output.hasClass("snackbars")) {
+		output.html('<p><span class="icon text-middle fa fa-circle-o-notch fa-spin icon-xxs"></span><span>'+msg+'</span></p>');
+		output.addClass("active");
+	}
 }
 
-function shareLinks() {	$("#sharer-block a").each(function(){$(this).get(0).href += window.location;});}
-
-window.addEventListener('load', shareLinks);
-
-
-function getBase64(file,maildata) {
-	//maildata["attachments"] = {
-	//	"filename" : file.name,
-	//	"id" : file.name,
-	//	"content" : ""
-	//}
-	maildata["attachment"] = [{
-		"content" : "",
-		"name" : file.name
-	}];
-	var reader = new FileReader();
-	reader.readAsDataURL(file);
-	reader.onload = function () {
-		//maildata["attachments"]["content"] = reader.result,
-		maildata["attachment"][0]["content"] = reader.result.split(',').pop();
-		cUrl_request(maildata);
-	};
-	reader.onerror = function (error) {
-		return null;
-	};
- }
-
-function sendMail()
+function collectData()
 {
-	//var templates = { 'contact' : 'k68zxl275k94j905', 'position' : '0r83ql3p89pgzw1j' };
-	var templates = { 'contact' : 1, 'position' : 2 };
-	var formtype = $(".rd-mailform").attr('data-form-type'); 
 	var formdata = {};
-
-	$(".form-input").each(function(index) {
+	$("#nominate-form .form-input").each(function(index) {
 		formdata[String($(this).attr('name'))] = $(this).attr('value');
 	});
-
-	formdata['page'] = curPage;
-	formdata['url'] =  window.location.href;
-
-	var maildata = {
-		//"from": {
-		"sender": {
-			"email": "robot@alef.aero",
-			"name": "Alef Robot"
-		},
-		"to": [
-			{
-				"email": "ceo@alef.aero"				
-			}
-		],
-//		"personalization": [{
-//			"email": "khandro.an@gmail.com",
-//			"data": { formdata }
-//		}],
-//		"template_id": templates[formtype]
-		"templateId":templates[formtype],
-		"params": formdata,
-		"headers":{  
-			"X-Mailin-custom":"custom_header_1:custom_value_1|custom_header_2:custom_value_2|custom_header_3:custom_value_3",
-			"charset":"iso-8859-1"}
-	};
-
-	if (formtype=='contact') {
-		cUrl_request(maildata);
-	}
-	if (formtype=="position")
-	{
-		getBase64(document.getElementById("contact-resume").files[0],maildata);
-	}
-	
+	return formdata;
 }
 
-const crypt = (salt, text) => {
-	const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
-	const byteHex = (n) => ("0" + Number(n).toString(16)).substr(-2);
-	const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
-  
-	return text
-	  .split("")
-	  .map(textToChars)
-	  .map(applySaltToChar)
-	  .map(byteHex)
-	  .join("");
-  };
+function updateSheets(formdata,sheet) {
+	//web app url
+	// 2023	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbwo40J-sZzmxsLaODCs9Yqj9cBJ9jYTYMR09ff3_Uuz7ZF2hwB7_8ELG778C32JFRAv/exec";
+	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbxTugs3xAvidEK9SW66jRptMKgPNl5_rgu3xqKbSLcaGUDJvtLOrMX58sNpa-kOrHg-/exec";
+	// 2023 if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbwysfyDy_hnKbiBALhC37-ei_B7-LZnngHHVEJvAQJlUtceS-YzzCbss8QWKOay_Imz/exec";
+	if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbzw13vwbabNOpIgYTkwf7D8zElyHlHz4TghyEuTYetUCQJijEy6ajfTWX7N1oNIVl6P/exec"
+	if (sheet=='like') var g_url = "https://script.google.com/macros/s/AKfycbxYjxAxPKnV7GkhZLyE2xMQwT91YadVUUah1DPuqvOsZZ3A_rIwqREbpx9ojed48WwhbQ/exec";
 
-const decrypt = (encoded) => {
-	const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
-	const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
-	return encoded
-	  .match(/.{1,2}/g)
-	  .map((hex) => parseInt(hex, 16))
-	  .map(applySaltToChar)
-	  .map((charCode) => String.fromCharCode(charCode))
-	  .join("");
-  };
+	var xhr = $.ajax({
+		url: g_url,
+		method: "GET",
+		type: "GET",
+		dataType: "json",
+		data: formdata
+	  }).success(
+		  function () { 
+			if (sheet=="nomination") formClear(true,"Песня успешно номинирована!"); 
+			if (sheet=="rate") {
+				formClear(true,"Ваш голос учтен!");
+				setCookie(formdata['id'],formdata['stars'],365);
+				votes_by_id[formdata['id']]['votes']++;
+				votes_by_id[formdata['id']]['total'] = votes_by_id[formdata['id']]['total'] + parseInt(formdata['stars']);
+				$(".post-boxed__stars[rate-id='"+formdata['id']+"']").attr("class",("post-boxed__stars voted "+getRating(formdata['id'])));
 
-function cUrl_request(maildata) {
+			}
+			if (sheet=="like") {
+				showMsg("Лайк отправлен!","success");
+				setCookie(formdata['id'],true,365);
+				likes_by_id[formdata['id']]++;
+			}
 
-	let token = "61727c606a707b3429292b2d20787f2e2e2f2f2d2d212d7a2a7b217f2f7f7c7c2c297f7f7b2a2c2a282c7c2a7a28202a20282f2b207a2c282d2e2f292f2d782c2e2e2c2d7b2d7b2c344d284f214e6f7f52745e72415a5d6877";
-	let post = JSON.stringify(maildata);
- 
-//	const url = "https://api.mailersend.com/v1/email";
-	const url = "https://api.sendinblue.com/v3/smtp/email";
+		}
+	  ).error (
+		function (xhr) { 
+			if (sheet=="nomination") formClear(false,"Не удалось добавить данные",true,false); 
+			if (sheet=="rate") formClear("Перезагрузите страницу и попробуйте еще раз!",false); 
+			if (sheet=="like") showMsg("Перезагрузите страницу и попробуйте еще раз!","error");
+		}
+	  );
 
-	let xhr = new XMLHttpRequest();
- 
-	xhr.open('POST', url, true);
-	//xhr.setRequestHeader('Authorization', 'Bearer '+token);
-	xhr.setRequestHeader('accept', 'application/json');
-	xhr.setRequestHeader('api-key', decrypt(token));
-	xhr.setRequestHeader('content-type', 'application/json');
-	xhr.send(post);
- 
-	xhr.onload = function () {
+}
 
-		var form = $(".rd-mailform"),
+
+function formClear(status,success_message,required=true,reset=true) {
+	var form = $(".rd-mailform"),
 		output = $("#" + form.attr("data-form-output"));
 
-    	if(xhr.status === 201) {
-			var cls = "success", msg = "Mail sent!", icon = "mdi-check";
+    	if(status==required) {
+			var cls = "success", msg = success_message, icon = "mdi-check";
 		}
 		else {
-			var cls = "error", msg = "Something went wrong: "+String(xhr.status), icon = "mdi-alert-outline";
+			var cls = "error", msg = "Ошибка: "+String(status), icon = "mdi-alert-outline";
 		}
 
 		form
 		.addClass(cls)
 		.removeClass('form-in-process');
+
+		if (reset) form.trigger('reset');
 
 		output.text(msg);
 
@@ -1211,5 +1096,166 @@ function cUrl_request(maildata) {
 			output.removeClass("active");
 		}, 3500);
 
-    	}
 }
+
+function readSheets(sheet_url, success_function, target_table) {
+	var xhr = $.ajax({
+		url: sheet_url,
+		dataType: "text"
+	  }).success(
+		  function (data) { 	
+			var sheet_data = data.split(/\r?\n|\r/);
+			var keys = sheet_data[0].split('\t');
+			var show_id = -1;
+			for (var i=0; i<keys.length; i++) if (keys[i]=='show') { show_id = i; break; }
+			var new_data = [];
+			for(var i = 1; i<sheet_data.length; i++)
+    		{
+				var tmp = sheet_data[i].split('\t');
+				if (tmp[show_id]=="1")
+				{
+					sheet_data[i] = {};
+					for (var j=0; j<keys.length-1; j++) {
+						sheet_data[i][keys[j]] = tmp[j];
+					}
+					new_data.push(sheet_data[i]);
+				}
+			}
+			success_function(new_data,target_table);
+
+		   }
+	  ).error (
+		function (xhr) { return false; }
+	  );
+
+}
+
+function setCookie(cname, cvalue, exdays) {
+	const d = new Date();
+	d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	let expires = "expires="+ d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+function getCookie(cname) {
+	let name = cname + "=";
+	let decodedCookie = decodeURIComponent(document.cookie);
+	let ca = decodedCookie.split(';');
+	for(let i = 0; i <ca.length; i++) {
+	  let c = ca[i];
+	  while (c.charAt(0) == ' ') {
+		c = c.substring(1);
+	  }
+	  if (c.indexOf(name) == 0) {
+		return c.substring(name.length, c.length);
+	  }
+	}
+	return "";
+  }
+
+function getRating(id,type='css') {
+	if (votes_by_id[id]) {
+		if (type=='css') return "stars-"+Math.round(votes_by_id[id]['total']/votes_by_id[id]['votes']/0.5)*5;
+		if (type=='exact') return Math.round(votes_by_id[id]['total']/votes_by_id[id]['votes']*100)/100;
+		if (type=='total') return votes_by_id[id]['total'];
+		if (type=='votes') return votes_by_id[id]['votes'];
+	}
+	else {
+		if ((type=='votes')||(type=='exact')) return 0;
+		return "";
+	}
+}
+
+function processNominations(data,target_table) {
+	if (data.length<1) {
+		target_table.closest('.fixed-height').addClass('hide');
+		target_table.closest('.post-boxed__main').find('.table-header').addClass('hide');
+		target_table.closest('.cell-md-6').removeClass('loading');
+		$("#music-trophy").removeClass('hide');
+		return;
+	}
+	var row = target_table.find("tr");
+	row = row.eq(row.length-1);
+	var n = row.length-1;
+	//for (var i=0; i<data.length; i++) {
+	for (var i=data.length-1; i>=0; i--) {
+		row.find(".cell-name").eq(0).text(data[i]["name"].trim());
+		var author = (data[i]["music"]==data[i]["lyrics"]) ? data[i]["music"] : data[i]["music"] + "&nbsp;/ " + data[i]["lyrics"];
+ 		row.find(".cell-author").eq(0).html(author);
+		var rater = row.find(".cell-rate .post-boxed__stars").eq(0);
+		rater.attr("class","post-boxed__stars");
+		if (getCookie(data[i]["id"])!="") rater.addClass('voted');
+		rater.attr("rate-id",data[i]["id"]);
+		rater.attr("data-toggle","modal");
+		rater.attr("data-target","#exampleModal");
+		rater.addClass(getRating(data[i]["id"]));
+		if (data[i]["link"]!="") {
+			row.find(".cell-link a").eq(0).attr("href",data[i]["link"]);
+		}
+		else row.find(".cell-link a").eq(0).addClass("hide");
+		target_table.find("tbody").append("<tr>"+row.html()+"</tr>");
+	}
+	row.remove();
+	target_table.closest('.cell-md-6').removeClass('loading');
+	target_table.removeClass('hide');
+	if (target_table.outerHeight()<300) target_table.closest('.post-boxed__main').find('th.cell-rate').addClass('smaller');
+
+	$(".post-boxed__stars").each( function() {
+		$(this).find("span").each( function(index) {
+			$(this).on("click", function() {
+				var id = $(this).closest(".post-boxed__stars").attr("rate-id");
+				var name = "«" + $(this).closest("tr").find('.cell-name').text()+"»";
+				var author = $(this).closest("tr").find('.cell-author').text();
+				$("#modal-name").text(name);
+				$("#modal-author").text(author);
+				$("#modal-votes").text(getRating(id,'votes'));
+				$("#modal-average").text(getRating(id,'exact'));
+				if (!$(".post-boxed__stars[rate-id='"+id+"']").hasClass('voted'))
+				{
+				$("#radio-container").removeClass('hide');
+				$("#your-vote").addClass('hide');
+				$("#modal-submit").text = "Голосовать";
+				$("input:radio[name=vote]").eq(index).attr("checked",true);
+				$("#modal-submit").on("click", function() {
+						var vote = $("input:radio[name='vote']:checked").val();
+						var formdata = { 'id' : id, 'stars' : vote, 'ip_address' : user_ip, 'time' : fullDate(new Date()) };
+						updateSheets(formdata,'rate');
+						alert_message('Отправляем оценку');
+						$('#modal_closer').trigger('click');
+						$(".post-boxed__stars[rate-id='"+formdata['id']+"']").addClass('voted');
+//					else {$('#exampleModal').modal('toggle'); alert("вы уже проголосовали за эту песню!");  }
+					//alert(id + ":" + vote + ":" + name + ":" + author);
+				});
+				}
+				else {
+					$("#radio-container").addClass('hide');
+					$("#your-vote").removeClass('hide');
+					$("#modal-submit").text = "Закрыть";
+					$("#modal-submit").on("click", function() { $('#modal_closer').trigger('click'); });
+
+				}
+			});
+			$(this).hover(function() {
+				$(this).closest(".post-boxed__stars").addClass("stars-"+(index+1));
+			},
+			function () {
+				$(this).closest(".post-boxed__stars").removeClass("stars-"+(index+1));
+			});
+		});
+	} );
+
+}
+
+function fullDate(now) {
+	var result = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"});
+	return result;
+	//return now.getFullYear() + "/" + String(now.getMonth()+1).padStart(2,"0") + "/" + String(now.getDate()).padStart(2,"0") + " " + now.getHours().padStart(2,"0") + ":" + now.getMinutes().padStart(2,"0");
+}
+
+var user_ip = "";
+
+$.getJSON("https://api.ipify.org?format=json", function(data) {	user_ip = data.ip;});
+
+$('.rd-navbar-nav .inline').click(function() {
+	$('.rd-navbar-toggle').trigger('click');
+  });
