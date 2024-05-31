@@ -199,7 +199,7 @@ body {
 .table-list tr:last-of-type {border-bottom: 0;}
 
 .cell-name {width: 35%;}
-.cell-author {width: 35%; padding-left: 10px; padding-right: 10px;}
+.cell-author {width: 35%;}
 .cell-link {width: 13%;}
 .cell-rate {width: 22%; min-width: 100px;}
 
