@@ -199,7 +199,14 @@ body {
 .table-list tr:last-of-type {border-bottom: 0;}
 
 .cell-name {width: 35%;}
-.cell-author {width: 35%; padding-left: 10px !important; padding-right: 10px !important;}
+.cell-author {width: 35%;}
+@media ((min-width:992px) and (max-width: 1024px)) {
+	.cell-author {
+		padding-left: 6px !important; 
+		padding-right: 6px !important;
+	}
+}
+
 .cell-link {width: 13%;}
 .cell-rate {width: 22%; min-width: 100px;}
 
@@ -4623,7 +4630,7 @@ html .icon-md {
 
 }
 
-@media (max-width: 412px) { 
+@media (max-width: 426px) { 
 
 	.table-list td {font-size: 12px; padding-left: 0; padding-right: 0;}
 	.table-list td.cell-rate {font-size: 11px; min-width: 50px;}
