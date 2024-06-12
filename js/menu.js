@@ -9,7 +9,7 @@ function createMenu(where)
         // { url: 'investors.html', title: 'Investors',class:''},
         // { url: 'contact.html', title: 'Contact',class:''},
         { url: 'gallery.html', title: 'Фото&nbsp;и&nbsp;видео',class:''},
-        { url: 'index.html', title: 'Купить билеты<br><small>на&nbsp;мероприятия</small>',class:Array('menu-button')}, 
+        { url: 'https://www.poluostrovfestival.org/?PID=1037', title: 'Купить билеты<br><small>на&nbsp;мероприятия</small>',class:Array('menu-button')}, 
         );
 
     var item = window.location.href;
