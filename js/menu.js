@@ -5,7 +5,7 @@ function createMenu(where)
     menu = Array( 
         { url: '/award/index.html', title: 'Премия Имени Леонида Духовного',class:''},
         { url: 'index.html', title: 'История Клуба',class:''},
-        { url: 'index.html', title: 'Персоналии',class:''},
+        { url: 'personalii.html', title: 'Персоналии',class:''},
         // { url: 'investors.html', title: 'Investors',class:''},
         // { url: 'contact.html', title: 'Contact',class:''},
         { url: 'gallery.html', title: 'Фото&nbsp;и&nbsp;видео',class:''},
