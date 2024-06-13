@@ -7476,6 +7476,12 @@ html:not(.tablet):not(.mobile) .thumb-alice:hover .thumb-alice__inner {
 	}
 }
 
+@media(max-width:480px) {
+	.text-xxs-center {
+		text-align: center;
+	}
+}
+
 /*
 *
 * Text styling
