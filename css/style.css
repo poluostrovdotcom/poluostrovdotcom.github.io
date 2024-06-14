@@ -15774,7 +15774,7 @@ html.rd-navbar-fixed-linked .page {
 	}
 }
 
-@media (min-width:991px) { .rd-navbar-element { display: none;} }
+.rd-navbar-element { display: none;}
 
 @media (max-width: 1799px) {
 	.rd-navbar-sidebar .brand__slogan {
