@@ -3152,6 +3152,18 @@ html .icon-xl {
 	vertical-align: middle;
 }
 
+.rd-navbar-element .icon-style-camera {
+	color: #151515 !important;
+}
+
+.fa-festival.icon-style-camera {
+	padding: 9px 10px 12px;
+}
+
+.rd-navbar-element .icon-style-camera span {
+	border-color: rgba(50,50,50,0.3);
+}
+
 .icon-style-camera > span {
 	position: absolute;
 	width: 14px;
@@ -14532,6 +14544,13 @@ html.lt-ie-10 .range > .cell-lg-12 {
 	padding: 8px 16px;
 }
 
+@media(min-width:992px) and (max-width:1180px) {
+	.rd-navbar-static .rd-navbar-nav > li > a {
+		/*padding: 8px 5px;*/
+	}
+
+}
+
 .rd-navbar-static .rd-navbar-nav > li > a span {
 	position: absolute;
 	width: 14px;
@@ -14717,11 +14736,11 @@ html.lt-ie-10 .range > .cell-lg-12 {
 }
 
 .rd-navbar-static.rd-navbar_inverse .rd-navbar-element a {
-	color: #d3d3d6;
+	color: #151515;
 }
 
 .rd-navbar-static.rd-navbar_inverse .rd-navbar-element a:hover {
-	color: #f3ef84;
+	color: #151515;
 }
 
 .rd-navbar-static.rd-navbar_inverse.rd-navbar--is-stuck, .rd-navbar-static.rd-navbar_inverse.rd-navbar--is-clone {
@@ -20298,6 +20317,17 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 
 .fa-external-link:before {
 	content: "\f08e";
+}
+
+.fa-festival {
+	align-items: center;
+	display: inline-flex;
+}
+
+.fa-festival:before {
+	content: "\f08e";
+	padding-right: 5px;
+	top: 1px;
 }
 
 .fa-sign-in:before {
