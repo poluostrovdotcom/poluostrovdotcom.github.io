@@ -5232,6 +5232,18 @@ a.post-creative__aside:hover .post-creative__image {
 	}
 }
 
+.quote-primary {
+	width: 100%;
+	max-width: 600px;
+	margin-left: 10%;
+}
+
+@media(max-width:992px) {
+	.quote-primary {
+		margin-left: 0;
+	}
+}
+
 .quote-primary__mark {
 	position: relative;
 	top: 6px;
@@ -5247,7 +5259,7 @@ a.post-creative__aside:hover .post-creative__image {
 .quote-primary__body {
 	position: relative;
 	padding: 25px 0;
-	border-top: 1px solid #f2f3f8;
+	border-top: 1px solid #aaa;
 }
 
 .quote-primary__body::before, .quote-primary__body::after {
@@ -5256,7 +5268,7 @@ a.post-creative__aside:hover .post-creative__image {
 	bottom: 0;
 	height: 13px;
 	border-style: solid;
-	border-color: #f2f3f8;
+	border-color: #aaa;
 }
 
 .quote-primary__body::before {
@@ -33297,4 +33309,56 @@ input[type=radio] { width: 30px; height: 30px; filter: hue-rotate(-175deg) grays
 
 .bg-white .post-boxed__main p, .bg-white .post-boxed__main h3 {
 	color: #101010;
+}
+
+.anketa {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.anketa-header {
+	flex-basis: 30%;
+	margin: 0 0 10px 0;
+	padding-right: 10px;
+	padding-top: 5px;
+}
+
+.anketa-data {
+	flex-basis: 70%;
+	margin: 0 0 10px 0;
+}
+
+.anketa-full {
+	flex-basis: 100%;
+}
+
+.text-yellow {
+	color: #f3ef84 !important;
+}
+
+.box-line:has(.anketa) {
+	min-height: 490px;
+	display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.box-width-0 .anketa-header {
+	flex-basis: 15%; 
+	white-space: nowrap;
+}
+.box-width-0 .anketa-data {
+	flex-basis: 85%; 
+}
+
+.text-story {
+	font-size: 20px;
+	line-height: 1.1;
+	width: 100%;
+}
+
+.box-width-0 {
+	width: 100%;
+	max-width: 100%;
 }
