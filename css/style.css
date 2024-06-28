@@ -4900,7 +4900,7 @@ html .icon-xl {
 
 @media (min-width: 480px) {
 	.post-boxed {
-		padding: 35x 30px;
+		padding: 35px 30px;
 	}
 	.post-boxed__aside {
 		padding-top: 20px;
@@ -33362,6 +33362,12 @@ input[type=radio] { width: 30px; height: 30px; filter: hue-rotate(-175deg) grays
 	font-size: 20px;
 	line-height: 1.1;
 	width: 100%;
+}
+
+@media(min-width:992px) {
+	.post-boxed:has(.text-story) {
+		padding: 60px 75px;
+	}
 }
 
 .box-width-0 {
