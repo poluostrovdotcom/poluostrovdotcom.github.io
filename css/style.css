@@ -7156,6 +7156,7 @@ html:not(.tablet):not(.mobile) .thumb-ruby:hover .thumb-ruby__text, html:not(.ta
 	z-index: 1;
 	padding: 30px;
 	background-color: rgba(32, 74, 67, 0.3);
+	/*display: none;*/
 }
 
 .thumb-ann__caption::before {
@@ -7166,7 +7167,7 @@ html:not(.tablet):not(.mobile) .thumb-ruby:hover .thumb-ruby__text, html:not(.ta
 	bottom: 10px;
 	left: 10px;
 	z-index: 2;
-	border: 1px solid rgba(255, 255, 255, 0.66);
+	/*border: 1px solid rgba(255, 255, 255, 0.66);*/
 	background-color: transparent;
 	pointer-events: none;
 }
@@ -7256,7 +7257,7 @@ html:not(.tablet):not(.mobile) .thumb-ann__text {
 }
 
 html:not(.tablet):not(.mobile) .thumb-ann:hover .thumb-ann__caption {
-	background-color: rgba(243, 239, 142, 0.5);
+	background: linear-gradient(170deg,rgba(203,199,92,0.7) 0%, rgba(173,147,49,0.7) 60%) !important;
 }
 
 html:not(.tablet):not(.mobile) .thumb-ann:hover .thumb-ann__caption::before {
@@ -7280,6 +7281,10 @@ html:not(.tablet):not(.mobile) .thumb-ann:hover .thumb-ann__caption {
 html:not(.tablet):not(.mobile) .thumb-ann:hover .thumb-ann__text {
 	opacity: 1;
 	transform: translate3d(0, 0, 0) scale(1);
+}
+
+.thumb-ann__text:empty::before,.thumb-ann__text:empty {
+	display: none;
 }
 
 /**
@@ -16924,7 +16929,7 @@ html[class*="ie"] .dtp-hand, html[class*="ie"] .dtp-hour-hand {
 		opacity: 0;
 	}
 	.slick-style-1 .slick-slide-caption::after {
-		background: linear-gradient(to right, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+		background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.2) 100%);
 		opacity: 1;
 	}
 	.slick-style-1 .slick-slide-inner {
@@ -16965,7 +16970,7 @@ html[class*="ie"] .dtp-hand, html[class*="ie"] .dtp-hour-hand {
 		justify-content: flex-start;
 	}
 	.slick-style-1 .slick-center + .slick-slide .slick-slide-caption::after {
-		background: linear-gradient(to left, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+		background: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.2) 100%);
 	}
 	.slick-style-1 .slick-center + .slick-slide .slick-slide-caption {
 		transform: translate3d(70px, 0, 0);
