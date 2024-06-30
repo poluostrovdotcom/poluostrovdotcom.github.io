@@ -33375,6 +33375,25 @@ input[type=radio] { width: 30px; height: 30px; filter: hue-rotate(-175deg) grays
 	}
 }
 
+.post-boxed:has(.text-story) .range {
+	margin-left: -90px;
+	margin-right: -90px;
+}
+
+@media(max-width:992px) {
+	.post-boxed:has(.text-story) .range {
+		margin-left: -45px;
+		margin-right: -45px;
+	}
+}
+
+@media(max-width:767px) {
+	.post-boxed:has(.text-story) .range {
+		margin-left: -5px;
+		margin-right: 0;
+	}
+}
+
 .box-width-0 {
 	width: 100%;
 	max-width: 100%;
