@@ -33410,3 +33410,18 @@ input[type=radio] { width: 30px; height: 30px; filter: hue-rotate(-175deg) grays
     color: black;
     font-weight: bold;
 }
+
+.anchor {
+	position: relative; 
+	top:-40px; 
+	opacity: 0; 
+	height: 1px; 
+	overflow: hidden; 
+	margin:0;
+}
+
+@media(max-width:992px) {
+	.anchor {
+		top:-15px; 
+	}
+}
