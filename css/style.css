@@ -33405,3 +33405,8 @@ input[type=radio] { width: 30px; height: 30px; filter: hue-rotate(-175deg) grays
 	text-decoration: none; 
 	color: #999 !important;
 }
+
+.bg-yellow td.cell-name, .bg-yellow td.cell-author {
+    color: black;
+    font-weight: bold;
+}
