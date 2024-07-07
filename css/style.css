@@ -33398,3 +33398,10 @@ input[type=radio] { width: 30px; height: 30px; filter: hue-rotate(-175deg) grays
 	width: 100%;
 	max-width: 100%;
 }
+
+.button-disabled {
+	cursor: default; 
+	pointer-events: none; 
+	text-decoration: none; 
+	color: grey;
+}
