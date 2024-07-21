@@ -33188,12 +33188,12 @@ input[type=radio] { width: 30px; height: 30px; filter: hue-rotate(-175deg) grays
 }
 
 
-.form-wrap:has(#nominate-name):before, .winner-name h4::before {
+.form-wrap:has(#nominate-name):before, .winner-name h4::before, .bg-yellow .winner-name h3::before {
 	content : "«";
 	left: -25px;
 }
 
-.form-wrap:has(#nominate-name):after, .winner-name h4::after {
+.form-wrap:has(#nominate-name):after, .winner-name h4::after, .bg-yellow .winner-name h3::after {
 	content : "»";
 	right: -25px;
 }
@@ -33432,4 +33432,25 @@ input[type=radio] { width: 30px; height: 30px; filter: hue-rotate(-175deg) grays
 	.always-reverse {
 		flex-direction:column-reverse !important;
 	}
+}
+
+.bg-yellow .winner h3  {
+	color: #151515 !important;
+}
+
+.bg-yellow .winner-name:before {
+	filter: unset;
+	min-width: 50px;
+}
+
+.bg-yellow .winner-name:hover::before {
+	filter: invert(1);
+	margin-top: 0;
+}
+
+.bg-yellow .winner-name {
+	display: flex;
+	align-items: center;
+	flex-direction: row-reverse;
+	justify-content: space-evenly;
 }
