@@ -1027,8 +1027,8 @@ function updateSheets(formdata,sheet) {
 	//web app url
 	// 2023	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbwo40J-sZzmxsLaODCs9Yqj9cBJ9jYTYMR09ff3_Uuz7ZF2hwB7_8ELG778C32JFRAv/exec";
 	// if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbxTugs3xAvidEK9SW66jRptMKgPNl5_rgu3xqKbSLcaGUDJvtLOrMX58sNpa-kOrHg-/exec";
-	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbyLh6P6r8TZDkzJMCRF6zf4MKnNPMl1zwwZjKfOfZOLrlABqmwui8RmM-CdLTUTCyIK/exec";
-		// 2023 if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbwysfyDy_hnKbiBALhC37-ei_B7-LZnngHHVEJvAQJlUtceS-YzzCbss8QWKOay_Imz/exec";
+	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbxhfOBvHPjZKPjKzuV55jLQX9cYGCsZ1VeF5B09NJiIjL-IgnUCJqcVtEHLVO-gpt9p/exec";
+	// 2023 if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbwysfyDy_hnKbiBALhC37-ei_B7-LZnngHHVEJvAQJlUtceS-YzzCbss8QWKOay_Imz/exec";
 	if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbzw13vwbabNOpIgYTkwf7D8zElyHlHz4TghyEuTYetUCQJijEy6ajfTWX7N1oNIVl6P/exec"
 	if (sheet=='like') var g_url = "https://script.google.com/macros/s/AKfycbxYjxAxPKnV7GkhZLyE2xMQwT91YadVUUah1DPuqvOsZZ3A_rIwqREbpx9ojed48WwhbQ/exec";
 
