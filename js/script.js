@@ -5,6 +5,7 @@
 const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
 
 "use strict";
+
 (function () {
 	var isNoviBuilder = window.xMode;
 	var userAgent = navigator.userAgent.toLowerCase(),
@@ -866,7 +867,6 @@ const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 
 							formdata["show"] = 0;
 							formdata["name"] = formdata["name"].replace(/"/g,"");
 							updateSheets(formdata,"nomination");
-
 						} else {
 							return false;
 						}
@@ -1023,94 +1023,79 @@ function collectData()
 	return formdata;
 }
 
-function updateSheets(formdata,sheet) {
-	//web app url
-	// 2023	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbwo40J-sZzmxsLaODCs9Yqj9cBJ9jYTYMR09ff3_Uuz7ZF2hwB7_8ELG778C32JFRAv/exec";
-	// if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbwxHEId9pLCexp37p4k7Zspva7gmySMERBb5GTeYzoA4nf6uWcgXecwX5cKMWdAMnyW/exec";
-	if (sheet=="nomination") var g_url = "https://script.google.com/macros/s/AKfycbwc_-qjFRQ4-JG6OrKnuSnXo1nGWyTstgWOT-DVfnNaHpXXjlrwKmva76NTSnSF1wsD/exec";
-	// 2023 if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbwysfyDy_hnKbiBALhC37-ei_B7-LZnngHHVEJvAQJlUtceS-YzzCbss8QWKOay_Imz/exec";
-	if (sheet=="rate") var g_url = "https://script.google.com/macros/s/AKfycbwjTGIC5rE8pZZnCn-0OemtQWHNRSfz2TIT5BjaWx6VKhjXzUu09lpWzbF_ujVi5zjA/exec"
-	if (sheet=='like') var g_url = "https://script.google.com/macros/s/AKfycbxYjxAxPKnV7GkhZLyE2xMQwT91YadVUUah1DPuqvOsZZ3A_rIwqREbpx9ojed48WwhbQ/exec";
-
-	var xhr = $.ajax({
-		url: g_url,
-		method: "GET",
-		type: "GET",
-		dataType: "json",
-		data: formdata
-	  }).success(
-		  function () { 
-			if (sheet=="nomination") formClear(true,"Песня успешно номинирована!"); 
-			if (sheet=="rate") {
-				formClear(true,"Ваш голос учтен!");
-				setCookie(formdata['id'],formdata['stars'],365);
-				votes_by_id[formdata['id']]['votes']++;
-				votes_by_id[formdata['id']]['total'] = votes_by_id[formdata['id']]['total'] + parseInt(formdata['stars']);
-				$(".post-boxed__stars[rate-id='"+formdata['id']+"']").attr("class",("post-boxed__stars voted "+getRating(formdata['id'])));
-
-			}
-			if (sheet=="like") {
-				showMsg("Лайк отправлен!","success");
-				setCookie(formdata['id'],true,365);
-				likes_by_id[formdata['id']]++;
-			}
-
+function updateSheets(formdata, sheet) {
+	if (sheet == "nomination") var g_url = "https://script.google.com/macros/s/AKfycbxVv3Xofr3fW4kVYHZJ8yibvy7A8x_seiiy4FikZCiuwFk-rHQqcn4GZPhRmBC59eKY/exec";
+	if (sheet == "rate") var g_url = "https://script.google.com/macros/s/AKfycbwjTGIC5rE8pZZnCn-0OemtQWHNRSfz2TIT5BjaWx6VKhjXzUu09lpWzbF_ujVi5zjA/exec"
+	if (sheet == 'like') var g_url = "https://script.google.com/macros/s/AKfycbxYjxAxPKnV7GkhZLyE2xMQwT91YadVUUah1DPuqvOsZZ3A_rIwqREbpx9ojed48WwhbQ/exec";
+	
+	fetch(g_url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded'
+		},
+		body: new URLSearchParams(formdata)
+	})
+	.then(response => response.json())
+	.then(data => {
+		if (sheet == "nomination") formClear(true,"Песня успешно номинирована!"); 
+		if (sheet == "rate") {
+			formClear(true, "Ваш голос учтен!");
+			setCookie(formdata['id'], formdata['stars'], 365);
+			votes_by_id[formdata['id']]['votes']++;
+			votes_by_id[formdata['id']]['total'] = votes_by_id[formdata['id']]['total'] + parseInt(formdata['stars']);
+			$(".post-boxed__stars[rate-id='" + formdata['id'] + "']").attr("class", ("post-boxed__stars voted " +getRating(formdata['id'])));
 		}
-	  ).error (
-		function (xhr) { 
-			if (sheet=="nomination") formClear(false,"Не удалось добавить данные",true,false); 
-			if (sheet=="rate") formClear("Перезагрузите страницу и попробуйте еще раз!",false); 
-			if (sheet=="like") showMsg("Перезагрузите страницу и попробуйте еще раз!","error");
+		if (sheet=="like") {
+			showMsg("Лайк отправлен!", "success");
+			setCookie(formdata['id'], true, 365);
+			likes_by_id[formdata['id']]++;
 		}
-	  );
-
+	}).catch(error => {
+		if (sheet == "nomination") formClear(false, "Не удалось добавить данные", true, false); 
+		if (sheet == "rate") formClear("Перезагрузите страницу и попробуйте еще раз!", false); 
+		if (sheet == "like") showMsg("Перезагрузите страницу и попробуйте еще раз!", "error");
+	});
 }
 
-
-function formClear(status,success_message,required=true,reset=true) {
+function formClear(status, success_message, required=true, reset=true) {
 	var form = $(".rd-mailform"),
-		output = $("#" + form.attr("data-form-output"));
+	output = $("#" + form.attr("data-form-output"));
 
-    	if(status==required) {
-			var cls = "success", msg = success_message, icon = "mdi-check";
-		}
-		else {
-			var cls = "error", msg = "Ошибка: "+String(status), icon = "mdi-alert-outline";
-		}
+	if (status == required) {
+		var cls = "success", msg = success_message, icon = "mdi-check";
+	} else {
+		var cls = "error", msg = "Ошибка: "+String(status), icon = "mdi-alert-outline";
+	}
 
-		form
-		.addClass(cls)
-		.removeClass('form-in-process');
+	form.addClass(cls).removeClass('form-in-process');
 
-		if (reset) form.trigger('reset');
+	if (reset) form.trigger('reset');
 
-		output.text(msg);
+	output.text(msg);
 
-		if (output.hasClass("snackbars")) {
-			output.html('<p><span class="icon text-middle mdi '+icon+' icon-xxs"></span><span>' + msg + '</span></p>');
-			} 
-		else {
-				output.addClass("active "+cls);
-			}
+	if (output.hasClass("snackbars")) {
+		output.html('<p><span class="icon text-middle mdi '+icon+' icon-xxs"></span><span>' + msg + '</span></p>');
+	} else {
+		output.addClass("active "+cls);
+	}
 
-		setTimeout(function () {
-			output.removeClass("active");
-		}, 3500);
-
+	setTimeout(function () {
+		output.removeClass("active");
+	}, 3500);
 }
 
 function readSheets(sheet_url, success_function, target_table) {
 	var xhr = $.ajax({
 		url: sheet_url,
 		dataType: "text"
-	  }).success(
-		  function (data) { 	
+	}).success(
+		function (data) {
 			var sheet_data = data.split(/\r?\n|\r/);
 			var keys = sheet_data[0].split('\t');
 			var show_id = -1;
-			for (var i=0; i<keys.length; i++) if (keys[i]=='show') { show_id = i; break; }
+			for (var i = 0; i < keys.length; i++) if (keys[i]=='show') { show_id = i; break; }
 			var new_data = [];
-			for(var i = 1; i<sheet_data.length; i++)
+			for (var i = 1; i < sheet_data.length; i++)
     		{
 				var tmp = sheet_data[i].split('\t');
 				if (tmp[show_id]=="1")
@@ -1122,13 +1107,11 @@ function readSheets(sheet_url, success_function, target_table) {
 					new_data.push(sheet_data[i]);
 				}
 			}
-			success_function(new_data,target_table);
-
-		   }
-	  ).error (
+			success_function(new_data, target_table);
+		}
+	).error (
 		function (xhr) { return false; }
-	  );
-
+	);
 }
 
 function setCookie(cname, cvalue, exdays) {
@@ -1143,16 +1126,16 @@ function getCookie(cname) {
 	let decodedCookie = decodeURIComponent(document.cookie);
 	let ca = decodedCookie.split(';');
 	for(let i = 0; i <ca.length; i++) {
-	  let c = ca[i];
-	  while (c.charAt(0) == ' ') {
-		c = c.substring(1);
-	  }
-	  if (c.indexOf(name) == 0) {
-		return c.substring(name.length, c.length);
-	  }
+		let c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
 	}
 	return "";
-  }
+}
 
 function getRating(id,type='css') {
 	if (votes_by_id[id]) {
@@ -1160,8 +1143,7 @@ function getRating(id,type='css') {
 		if (type=='exact') return Math.round(votes_by_id[id]['total']/votes_by_id[id]['votes']*100)/100;
 		if (type=='total') return votes_by_id[id]['total'];
 		if (type=='votes') return votes_by_id[id]['votes'];
-	}
-	else {
+	} else {
 		if ((type=='votes')||(type=='exact')) return 0;
 		return "";
 	}
@@ -1178,8 +1160,7 @@ function processNominations(data,target_table) {
 	var row = target_table.find("tr");
 	row = row.eq(row.length-1);
 	var n = row.length-1;
-	//for (var i=0; i<data.length; i++) {
-	for (var i=data.length-1; i>=0; i--) {
+	for (var i = data.length - 1; i >= 0; i--) {
 		row.find(".cell-name").eq(0).text(data[i]["name"].trim());
 		var author = (data[i]["music"]==data[i]["lyrics"]) ? data[i]["music"] : data[i]["music"] + "&nbsp;/ " + data[i]["lyrics"];
  		row.find(".cell-author").eq(0).html(author);
@@ -1213,22 +1194,21 @@ function processNominations(data,target_table) {
 				$("#modal-average").text(getRating(id,'exact'));
 				if (!$(".post-boxed__stars[rate-id='"+id+"']").hasClass('voted'))
 				{
-				$("#radio-container").removeClass('hide');
-				$("#your-vote").addClass('hide');
-				$("#modal-submit").text = "Голосовать";
-				$("input:radio[name=vote]").eq(index).attr("checked",true);
-				$("#modal-submit").on("click", function() {
+					$("#radio-container").removeClass('hide');
+					$("#your-vote").addClass('hide');
+					$("#modal-submit").text = "Голосовать";
+					$("input:radio[name=vote]").eq(index).attr("checked",true);
+					$("#modal-submit").on("click", function() {
 						var vote = $("input:radio[name='vote']:checked").val();
 						var formdata = { 'id' : id, 'stars' : vote, 'ip_address' : user_ip, 'time' : fullDate(new Date()) };
 						updateSheets(formdata,'rate');
 						alert_message('Отправляем оценку');
 						$('#modal_closer').trigger('click');
 						$(".post-boxed__stars[rate-id='"+formdata['id']+"']").addClass('voted');
-//					else {$('#exampleModal').modal('toggle'); alert("вы уже проголосовали за эту песню!");  }
-					//alert(id + ":" + vote + ":" + name + ":" + author);
-				});
-				}
-				else {
+					// else { $('#exampleModal').modal('toggle'); alert("вы уже проголосовали за эту песню!");  }
+						//alert(id + ":" + vote + ":" + name + ":" + author);
+					});
+				} else {
 					$("#radio-container").addClass('hide');
 					$("#your-vote").removeClass('hide');
 					$("#modal-submit").text = "Закрыть";
@@ -1250,13 +1230,11 @@ function processNominations(data,target_table) {
 function fullDate(now) {
 	var result = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"});
 	return result;
-	//return now.getFullYear() + "/" + String(now.getMonth()+1).padStart(2,"0") + "/" + String(now.getDate()).padStart(2,"0") + " " + now.getHours().padStart(2,"0") + ":" + now.getMinutes().padStart(2,"0");
 }
 
 var user_ip = "";
-
 $.getJSON("https://api.ipify.org?format=json", function(data) {	user_ip = data.ip;});
 
 $('.rd-navbar-nav .inline').click(function() {
 	$('.rd-navbar-toggle').trigger('click');
-  });
+});
