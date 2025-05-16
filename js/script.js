@@ -1025,7 +1025,7 @@ function collectData()
 
 function updateSheets(formdata, sheet) {
 	if (sheet == "nomination") var g_url = "https://script.google.com/macros/s/AKfycbxVv3Xofr3fW4kVYHZJ8yibvy7A8x_seiiy4FikZCiuwFk-rHQqcn4GZPhRmBC59eKY/exec";
-	if (sheet == "rate") var g_url = "https://script.google.com/macros/s/AKfycbwxHEId9pLCexp37p4k7Zspva7gmySMERBb5GTeYzoA4nf6uWcgXecwX5cKMWdAMnyW/exec"
+	if (sheet == "rate") var g_url = "https://script.google.com/macros/s/AKfycbwbnDlHnooSwM-DblH2TIqujSTQjSql94GV2_qa3waKE9pGmTki2sMDWRC7OYVC1aM/exec"
 	if (sheet == 'like') var g_url = "https://script.google.com/macros/s/AKfycbxYjxAxPKnV7GkhZLyE2xMQwT91YadVUUah1DPuqvOsZZ3A_rIwqREbpx9ojed48WwhbQ/exec";
 	
 	fetch(g_url, {
