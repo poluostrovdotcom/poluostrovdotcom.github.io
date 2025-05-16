@@ -699,10 +699,10 @@
           }).success(
             function (data) { 		
               var sheet_data = data.split(/\r?\n|\r/);
-              var keys = sheet_data[0].split(',');
+              var keys = sheet_data[0].split('\t');
               for(var i = 1; i<sheet_data.length; i++)
                 {
-                var tmp = sheet_data[i].split(',');
+                var tmp = sheet_data[i].split('\t');
                 if (tmp[0] in votes_by_id)
                 {
                   votes_by_id[tmp[0]]['votes']++;
