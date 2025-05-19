@@ -1041,7 +1041,18 @@ function updateSheets(formdata, sheet) {
 		if (sheet == "rate") {
 			formClear(true, "Ваш голос учтен!");
 			setCookie(formdata['id'], formdata['stars'], 365);
-			votes_by_id[formdata['id']]['votes']++;
+
+			//votes_by_id[formdata['id']]['votes']++;
+			if (formdata['id'] !== undefined) {
+			    const id = formdata['id'];
+			    if (!votes_by_id[id]) {
+			        votes_by_id[id] = { votes: 0 };
+			    }
+			    votes_by_id[id].votes++;
+			} else {
+			    console.error('formdata["id"] is undefined');
+			}			
+			
 			votes_by_id[formdata['id']]['total'] = votes_by_id[formdata['id']]['total'] + parseInt(formdata['stars']);
 			$(".post-boxed__stars[rate-id='" + formdata['id'] + "']").attr("class", ("post-boxed__stars voted " +getRating(formdata['id'])));
 		}
