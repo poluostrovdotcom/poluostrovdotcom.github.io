@@ -1174,6 +1174,7 @@ function processNominations(data,target_table) {
 	for (var i = data.length - 1; i >= 0; i--) {
 		row.find(".cell-name").eq(0).text(data[i]["name"].trim());
 		var author = (data[i]["music"]==data[i]["lyrics"]) ? data[i]["music"] : data[i]["music"] + "&nbsp;/ " + data[i]["lyrics"];
+		if (author != null && author.toLowerCase().includes('кесельман'.toLowerCase())) continue;
  		row.find(".cell-author").eq(0).html(author);
 		var rater = row.find(".cell-rate .post-boxed__stars").eq(0);
 		rater.attr("class","post-boxed__stars");
