@@ -862,6 +862,15 @@ const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 
 							}
 
 							var formdata = collectData();
+
+							// exclude "кесельман" from lyrics and music
+							if (
+							  (formdata['lyrics'] != null && formdata['lyrics'].toLowerCase().includes(keyword.toLowerCase())) ||
+							  (formdata['music'] != null && formdata['music'].toLowerCase().includes(keyword.toLowerCase()))
+							) {
+							  throw new Error('Forbidden content: "Кесельман" found in lyrics or music.');
+							}
+														
 							formdata["id"] = Date.now()+genRanHex(6);
 							formdata["time"] = fullDate(new Date());
 							formdata["show"] = 1;
