@@ -864,6 +864,7 @@ const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 
 							var formdata = collectData();
 
 							// exclude "кесельман" from lyrics and music
+							var keyword = "кесельман";
 							if (
 							  (formdata['lyrics'] != null && formdata['lyrics'].toLowerCase().includes(keyword.toLowerCase())) ||
 							  (formdata['music'] != null && formdata['music'].toLowerCase().includes(keyword.toLowerCase()))
