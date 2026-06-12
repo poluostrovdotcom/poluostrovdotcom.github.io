@@ -29,6 +29,38 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/style.css">
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
+    <style>
+      .button-nominate {
+        display: inline-block;
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+        padding: 22px 60px;
+        color: #151515 !important;
+        background-color: #f3ef84;
+        border: none;
+        border-radius: 6px;
+        box-shadow: 0 0 0 0 rgba(243, 239, 132, .7);
+        animation: nominate-pulse 2s infinite;
+        transition: transform .25s ease, background-color .25s ease;
+      }
+      .button-nominate:hover, .button-nominate:focus {
+        transform: scale(1.07);
+        background-color: #ffffff;
+        color: #151515 !important;
+        animation: none;
+        text-decoration: none;
+      }
+      @keyframes nominate-pulse {
+        0% { box-shadow: 0 0 0 0 rgba(243, 239, 132, .7); }
+        70% { box-shadow: 0 0 0 20px rgba(243, 239, 132, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(243, 239, 132, 0); }
+      }
+      @media (max-width: 767px) {
+        .button-nominate { font-size: 19px; padding: 16px 36px; }
+      }
+    </style>
   </head>
   <body>
     <!-- Page Loader-->
@@ -116,7 +148,7 @@
                           <h3>за лучшую авторскую (бардовскую) песню года</h3>
                           <p><mark>Памяти барда, поэта, руководителя клубов и фестивалей Леонида Духовного</mark></p>
 			                    <!-- p class="mt-1 mb-0"><a href="#nominate" class="button button-primary-outline button-ujarak button-size-1">Номинировать песню</a></p -->
-                          <p class="mt-1 mb-0"><a href="#nominate" class="button button-primary-outline button-ujarak button-size-1">Номинировать песню</a></p>
+                          <p class="mt-2 mb-0"><a href="#nominate" class="button-nominate">Номинировать песню</a></p>
                       </div>
                     </div>
                   </div>
@@ -394,7 +426,7 @@
                                 </table>
                               </div>
                           <p class="text-center text-faded" style="color: white;">(список будет пополняться по мере номинаций)</p>
-                          <p class="mt-1 mb-0"><a href="#nominate" class="button button-primary-outline button-ujarak button-size-1">Номинировать песню</a></p>
+                          <p class="mt-2 mb-0 text-center"><a href="#nominate" class="button-nominate">Номинировать песню</a></p>
                           <!-- <p class="mt-1 mb-0"><a href="#" class="button button-primary-outline button-ujarak button-size-1 button-disabled">Прием песен завершен</a></p>-->
                       </article>
                       </div>
