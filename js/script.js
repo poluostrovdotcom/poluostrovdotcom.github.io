@@ -1047,7 +1047,8 @@ function updateSheets(formdata, sheet) {
 	})
 	.then(response => response.json())
 	.then(data => {
-		if (sheet == "nomination") formClear(true,"Песня успешно номинирована!"); 
+		if (data && data.result == "error") throw new Error(data.error && data.error.name);
+		if (sheet == "nomination") formClear(true,"Песня успешно номинирована!");
 		if (sheet == "rate") {
 			formClear(true, "Ваш голос учтен!");
 			setCookie(formdata['id'], formdata['stars'], 365);
